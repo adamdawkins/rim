@@ -86,7 +86,7 @@ pub enum EditorAction {
 
 #[cfg(test)]
 
-mod tests {
+mod normal_mode_key_tests {
     use super::*;
 
     #[test]
