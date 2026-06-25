@@ -4,6 +4,14 @@
 - [x] [2026-06-25] Improve output of file contents like text editor (clear new lines etc)
 - [x] [2026-06-25] Render a cursor
 - [ ] cursor movement
+- [ ] `j`
+- [ ] `k`
+- [ ] `h`
+- [ ] `l`
+- [ ] Add boundary to `h`
+- [ ] Add boundary to `k`
+- [ ] Add boundary to `l`
+- [ ] Add boundary to `j`
 - [ ] Write a brand new file
 - [ ] Insert mode
 - [ ] `:w`
