@@ -7,12 +7,12 @@ use crossterm::{
     execute, style, terminal,
 };
 
-use rim::Cursor;
+use rim::{Buffer, Cursor};
 
 fn main() {
-    let buffer = fs::read_to_string("foo.txt").unwrap();
+    let contents = fs::read_to_string("foo.txt").unwrap();
     let mut terminal = Terminal::new();
-    terminal.render(&buffer);
+    terminal.render(&contents);
     loop {
         match read().unwrap() {
             Event::Key(key_event) => {
