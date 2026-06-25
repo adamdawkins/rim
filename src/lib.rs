@@ -1,3 +1,5 @@
+use std::fmt;
+
 pub mod editor;
 pub mod terminal;
 
@@ -35,6 +37,12 @@ impl Buffer {
 
     pub fn lines(&self) -> &Vec<String> {
         &self.lines
+    }
+}
+
+impl fmt::Display for Buffer {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{}", self.lines.join("\n"))
     }
 }
 
@@ -132,6 +140,16 @@ threethline";
     fn test_buffer_max_col_of_empty_line() {
         let buffer = Buffer::new("");
         assert_eq!(buffer.max_col(0), 0);
+    }
+
+    #[test]
+    fn test_buffer_to_string_returns_correct_string() {
+        let contents = "\
+foo
+bar";
+        let buffer = Buffer::new(contents);
+
+        assert_eq!(buffer.to_string(), contents);
     }
 }
 
