@@ -5,6 +5,10 @@ pub struct Cursor {
 }
 
 impl Cursor {
+    pub fn new(row: u16, col: u16) -> Self {
+        Cursor { row, col }
+    }
+
     pub fn down(&mut self) {
         self.row += 1;
     }
