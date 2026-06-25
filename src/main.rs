@@ -18,13 +18,11 @@ fn run(terminal: Terminal, mut editor: Editor) {
 
     loop {
         match read().unwrap() {
-            Event::Key(key_event) => match key_event.code {
-                key => {
-                    if let Some(EditorAction::Quit) = editor.handle_keypress(key) {
-                        break;
-                    }
+            Event::Key(key_event) => {
+                if let Some(EditorAction::Quit) = editor.handle_keypress(key_event.code) {
+                    break;
                 }
-            },
+            }
             _ => {}
         }
 
