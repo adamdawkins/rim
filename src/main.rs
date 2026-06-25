@@ -87,7 +87,11 @@ impl Terminal {
     }
 
     fn render_cursor(&self) {
-        execute!(stdout(), cursor::MoveTo(self.cursor.col, self.cursor.row)).unwrap();
+        execute!(
+            stdout(),
+            cursor::MoveTo(self.cursor.col(), self.cursor.row())
+        )
+        .unwrap();
     }
 }
 
@@ -118,5 +122,13 @@ impl Cursor {
 
     pub fn right(&mut self) {
         self.col += 1;
+    }
+
+    pub fn row(&self) -> u16 {
+        self.row
+    }
+
+    pub fn col(&self) -> u16 {
+        self.col
     }
 }
