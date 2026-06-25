@@ -69,6 +69,7 @@ impl Editor {
     }
 }
 
+#[derive(Debug, PartialEq)]
 pub enum EditorMode {
     Normal,
     // Insert,
