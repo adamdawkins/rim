@@ -48,19 +48,19 @@ impl Editor {
         }
     }
 
-    pub fn move_cursor_up(&mut self) {
+    fn move_cursor_up(&mut self) {
         self.cursor.up(&self.buffer);
     }
 
-    pub fn move_cursor_down(&mut self) {
+    fn move_cursor_down(&mut self) {
         self.cursor.down(&self.buffer);
     }
 
-    pub fn move_cursor_left(&mut self) {
+    fn move_cursor_left(&mut self) {
         self.cursor.left();
     }
 
-    pub fn move_cursor_right(&mut self) {
+    fn move_cursor_right(&mut self) {
         self.cursor.right(&self.buffer);
     }
 }
