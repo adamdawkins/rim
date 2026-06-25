@@ -162,4 +162,14 @@ mod cursor_tests {
         assert_eq!(cursor.row(), 2);
         assert_eq!(cursor.col(), 0);
     }
+
+    #[test]
+    fn test_cursor_goes_right() {
+        let mut cursor = Cursor::new(1, 0);
+
+        cursor.right();
+
+        assert_eq!(cursor.row(), 1);
+        assert_eq!(cursor.col(), 1);
+    }
 }
