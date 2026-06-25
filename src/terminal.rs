@@ -34,6 +34,7 @@ impl Terminal {
 
 impl Drop for Terminal {
     fn drop(&mut self) {
+        self.clear_screen();
         terminal::disable_raw_mode().unwrap();
     }
 }
