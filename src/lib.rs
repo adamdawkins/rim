@@ -56,7 +56,10 @@ impl Cursor {
         self.col -= 1;
     }
 
-    pub fn right(&mut self) {
+    pub fn right(&mut self, buffer: &Buffer) {
+        if self.col as usize >= buffer.max_col(self.row as usize) {
+            return;
+        }
         self.col += 1;
     }
 
@@ -165,11 +168,23 @@ mod cursor_tests {
 
     #[test]
     fn test_cursor_goes_right() {
+        let buffer = Buffer::new("0\n11\n2");
         let mut cursor = Cursor::new(1, 0);
 
-        cursor.right();
+        cursor.right(&buffer);
 
         assert_eq!(cursor.row(), 1);
         assert_eq!(cursor.col(), 1);
+    }
+
+    #[test]
+    fn test_cursor_cannot_go_right_from_end_of_line() {
+        let buffer = Buffer::new("0\n1\n2");
+        let mut cursor = Cursor::new(0, 0);
+
+        cursor.right(&buffer);
+
+        assert_eq!(cursor.row(), 0);
+        assert_eq!(cursor.col(), 0);
     }
 }

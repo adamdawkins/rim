@@ -29,7 +29,7 @@ fn main() {
                     terminal.move_cursor_up();
                 }
                 if key_event.code == KeyCode::Char('l') {
-                    terminal.move_cursor_right();
+                    terminal.move_cursor_right(&buffer);
                 }
                 if key_event.code == KeyCode::Char('h') {
                     terminal.move_cursor_left();
@@ -72,8 +72,8 @@ impl Terminal {
         self.render_cursor();
     }
 
-    pub fn move_cursor_right(&mut self) {
-        self.cursor.right();
+    pub fn move_cursor_right(&mut self, buffer: &Buffer) {
+        self.cursor.right(&buffer);
         self.render_cursor();
     }
 
