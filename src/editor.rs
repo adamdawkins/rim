@@ -28,6 +28,10 @@ impl Editor {
     pub fn handle_keypress(&mut self, key: KeyCode) -> Option<EditorAction> {
         match key {
             KeyCode::Char('q') => Some(EditorAction::Quit),
+            KeyCode::Char('j') => {
+                self.move_cursor_down();
+                None
+            }
             _ => None,
         }
     }
@@ -83,7 +87,6 @@ mod tests {
     }
 
     #[test]
-    #[ignore]
     fn test_editor_handles_down() {
         let mut editor = Editor::new(Buffer::new("line0\nline1\nline2"));
         editor.handle_keypress(KeyCode::Char('j'));
