@@ -23,19 +23,26 @@ fn main() {
     }
 }
 
-pub struct Terminal;
+pub struct Terminal {
+    cursor: Cursor,
+}
 
 impl Terminal {
     pub fn new() -> Self {
         terminal::enable_raw_mode().unwrap();
-        Terminal
+        Terminal {
+            cursor: Cursor::default(),
+        }
     }
 
     pub fn render(&self, buffer: &str) {
         self.clear_screen();
+
         for line in buffer.lines() {
             execute!(stdout(), style::Print(format!("{}\r\n", line))).unwrap();
         }
+
+        execute!(stdout(), cursor::MoveTo(self.cursor.col, self.cursor.row)).unwrap();
     }
 
     fn clear_screen(&self) {
@@ -52,4 +59,10 @@ impl Drop for Terminal {
     fn drop(&mut self) {
         terminal::disable_raw_mode().unwrap();
     }
+}
+
+#[derive(Default)]
+pub struct Cursor {
+    row: u16,
+    col: u16,
 }
