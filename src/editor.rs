@@ -36,6 +36,10 @@ impl Editor {
                 self.move_cursor_up();
                 None
             }
+            KeyCode::Char('l') => {
+                self.move_cursor_right();
+                None
+            }
             _ => None,
         }
     }
@@ -106,7 +110,6 @@ mod tests {
     }
 
     #[test]
-    #[ignore]
     fn test_editor_handles_right() {
         let mut editor = Editor::new(Buffer::new("hello\nworld"));
         editor.handle_keypress(KeyCode::Char('l'));
