@@ -1,7 +1,7 @@
 # Vim-esque text editor
 
 - [x] [2026-06-25] render the contents of a file
-- [/] Improve output of file contents like text editor (clear new lines etc)
+- [x] [2026-06-25] Improve output of file contents like text editor (clear new lines etc)
 - [ ] Write a brand new file
 - [ ] cursor movement
 - [ ] Insert mode

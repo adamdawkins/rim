@@ -1,12 +1,26 @@
 use std::fs;
 use std::io::stdout;
 
-use crossterm::{cursor, execute, style, terminal};
+use crossterm::{
+    cursor,
+    event::{read, Event, KeyCode},
+    execute, style, terminal,
+};
 
 fn main() {
     let buffer = fs::read_to_string("foo.txt").unwrap();
     let terminal = Terminal::new();
     terminal.render(&buffer);
+    loop {
+        match read().unwrap() {
+            Event::Key(key_event) => {
+                if key_event.code == KeyCode::Char('q') {
+                    break;
+                }
+            }
+            _ => {}
+        }
+    }
 }
 
 pub struct Terminal;
