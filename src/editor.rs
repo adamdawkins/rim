@@ -32,6 +32,10 @@ impl Editor {
                 self.move_cursor_down();
                 None
             }
+            KeyCode::Char('k') => {
+                self.move_cursor_up();
+                None
+            }
             _ => None,
         }
     }
@@ -94,7 +98,6 @@ mod tests {
     }
 
     #[test]
-    #[ignore]
     fn test_editor_handles_up() {
         let mut editor = Editor::new(Buffer::new("line0\nline1\nline2"));
         editor.handle_keypress(KeyCode::Char('j'));
