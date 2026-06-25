@@ -55,7 +55,7 @@ impl Cursor {
 }
 
 #[cfg(test)]
-mod tests {
+mod cursor_tests {
     use super::*;
 
     #[test]
