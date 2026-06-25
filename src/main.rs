@@ -7,14 +7,15 @@ use crossterm::{
     execute, style, terminal,
 };
 
-use rim::{Buffer, Cursor};
+use rim::{editor::Editor, Buffer, Cursor};
 
 fn main() {
     let contents = fs::read_to_string("foo.txt").unwrap();
     let buffer = Buffer::new(&contents);
     let mut terminal = Terminal::new();
+    let editor = Editor::new(buffer);
 
-    terminal.render(&buffer);
+    terminal.render(&editor.buffer());
 
     loop {
         match read().unwrap() {
@@ -23,13 +24,13 @@ fn main() {
                     break;
                 }
                 if key_event.code == KeyCode::Char('j') {
-                    terminal.move_cursor_down(&buffer);
+                    terminal.move_cursor_down(&editor.buffer());
                 }
                 if key_event.code == KeyCode::Char('k') {
-                    terminal.move_cursor_up(&buffer);
+                    terminal.move_cursor_up(&editor.buffer());
                 }
                 if key_event.code == KeyCode::Char('l') {
-                    terminal.move_cursor_right(&buffer);
+                    terminal.move_cursor_right(&editor.buffer());
                 }
                 if key_event.code == KeyCode::Char('h') {
                     terminal.move_cursor_left();
