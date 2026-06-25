@@ -1,3 +1,15 @@
+pub struct Buffer {
+    lines: Vec<String>,
+}
+
+impl Buffer {
+    pub fn new(content: &str) -> Self {
+        let lines = content.lines().map(|line| line.to_string()).collect();
+
+        Buffer { lines }
+    }
+}
+
 #[derive(Default)]
 pub struct Cursor {
     row: u16,
