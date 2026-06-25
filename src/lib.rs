@@ -14,6 +14,10 @@ impl Cursor {
     }
 
     pub fn up(&mut self) {
+        if self.row == 0 {
+            return;
+        }
+
         self.row -= 1;
     }
 
@@ -58,5 +62,23 @@ mod tests {
         cursor.left();
 
         assert_eq!([cursor.row(), cursor.col()], [1, 0]);
+    }
+
+    #[test]
+    fn test_cursor_goes_up() {
+        let mut cursor = Cursor::new(1, 10);
+
+        cursor.up();
+
+        assert_eq!([cursor.row(), cursor.col()], [0, 10]);
+    }
+
+    #[test]
+    fn test_cursor_cannot_go_up_from_first_row() {
+        let mut cursor = Cursor::new(0, 10);
+
+        cursor.up();
+
+        assert_eq!([cursor.row(), cursor.col()], [0, 10]);
     }
 }
