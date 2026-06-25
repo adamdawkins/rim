@@ -1,4 +1,5 @@
 pub mod editor;
+pub mod terminal;
 
 pub struct Buffer {
     lines: Vec<String>,

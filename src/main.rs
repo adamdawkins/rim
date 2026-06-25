@@ -1,13 +1,8 @@
 use std::fs;
-use std::io::stdout;
 
-use crossterm::{
-    cursor,
-    event::{read, Event, KeyCode},
-    execute, style, terminal,
-};
+use crossterm::event::{read, Event, KeyCode};
 
-use rim::{editor::Editor, Buffer, Cursor};
+use rim::{editor::Editor, terminal::Terminal, Buffer};
 
 fn main() {
     let contents = fs::read_to_string("foo.txt").unwrap();
@@ -40,39 +35,5 @@ fn main() {
         }
 
         terminal.render(&editor.buffer(), &editor.cursor());
-    }
-}
-
-pub struct Terminal;
-
-impl Terminal {
-    pub fn new() -> Self {
-        terminal::enable_raw_mode().unwrap();
-        Terminal
-    }
-
-    pub fn render(&self, buffer: &Buffer, cursor: &Cursor) {
-        self.clear_screen();
-
-        for line in buffer.lines() {
-            execute!(stdout(), style::Print(format!("{}\r\n", line))).unwrap();
-        }
-
-        execute!(stdout(), cursor::MoveTo(cursor.col(), cursor.row())).unwrap();
-    }
-
-    fn clear_screen(&self) {
-        execute!(
-            stdout(),
-            terminal::Clear(terminal::ClearType::All),
-            cursor::MoveTo(0, 0)
-        )
-        .unwrap();
-    }
-}
-
-impl Drop for Terminal {
-    fn drop(&mut self) {
-        terminal::disable_raw_mode().unwrap();
     }
 }
