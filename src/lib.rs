@@ -12,6 +12,10 @@ impl Buffer {
     pub fn max_row(&self) -> usize {
         self.lines.len() - 1
     }
+
+    pub fn max_col(&self, row: usize) -> usize {
+        self.lines[row].len() - 1
+    }
 }
 
 #[derive(Default)]
@@ -71,6 +75,18 @@ threethline";
         let buffer = Buffer::new(contents);
 
         assert_eq!(buffer.max_row(), 2);
+    }
+
+    #[test]
+    fn test_buffer_max_col() {
+        let contents = "\
+this line has 24 columns
+oneth line
+threethline";
+
+        let buffer = Buffer::new(contents);
+
+        assert_eq!(buffer.max_col(0), 23);
     }
 }
 
