@@ -42,7 +42,7 @@ impl Terminal {
             execute!(stdout(), style::Print(format!("{}\r\n", line))).unwrap();
         }
 
-        execute!(stdout(), cursor::MoveTo(self.cursor.col, self.cursor.row)).unwrap();
+        self.render_cursor();
     }
 
     fn clear_screen(&self) {
@@ -52,6 +52,10 @@ impl Terminal {
             cursor::MoveTo(0, 0)
         )
         .unwrap();
+    }
+
+    fn render_cursor(&self) {
+        execute!(stdout(), cursor::MoveTo(self.cursor.col, self.cursor.row)).unwrap();
     }
 }
 
