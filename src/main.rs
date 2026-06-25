@@ -8,9 +8,13 @@ fn main() {
     let contents = fs::read_to_string("foo.txt").unwrap();
     let buffer = Buffer::new(&contents);
     let terminal = Terminal::new();
-    let mut editor = Editor::new(buffer);
+    let editor = Editor::new(buffer);
 
-    terminal.render(&editor.buffer(), &editor.cursor());
+    run(terminal, editor);
+}
+
+fn run(terminal: Terminal, mut editor: Editor) {
+    terminal.render(editor.buffer(), editor.cursor());
 
     loop {
         match read().unwrap() {
@@ -34,6 +38,6 @@ fn main() {
             _ => {}
         }
 
-        terminal.render(&editor.buffer(), &editor.cursor());
+        terminal.render(editor.buffer(), editor.cursor());
     }
 }
