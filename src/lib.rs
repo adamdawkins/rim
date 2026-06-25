@@ -16,6 +16,10 @@ impl Buffer {
     pub fn max_col(&self, row: usize) -> usize {
         self.lines[row].len() - 1
     }
+
+    pub fn lines(&self) -> &Vec<String> {
+        &self.lines
+    }
 }
 
 #[derive(Default)]
