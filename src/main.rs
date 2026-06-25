@@ -15,7 +15,7 @@ fn main() {
     let mut terminal = Terminal::new();
     let editor = Editor::new(buffer);
 
-    terminal.render(&editor.buffer());
+    terminal.render(&editor.buffer(), &editor.cursor());
 
     loop {
         match read().unwrap() {
@@ -53,14 +53,14 @@ impl Terminal {
         }
     }
 
-    pub fn render(&self, buffer: &Buffer) {
+    pub fn render(&self, buffer: &Buffer, cursor: &Cursor) {
         self.clear_screen();
 
         for line in buffer.lines() {
             execute!(stdout(), style::Print(format!("{}\r\n", line))).unwrap();
         }
 
-        Terminal::render_cursor(&self.cursor);
+        Terminal::render_cursor(cursor);
     }
 
     pub fn move_cursor_down(&mut self, buffer: &Buffer) {
