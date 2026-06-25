@@ -30,6 +30,13 @@ impl Editor {
     }
 
     pub fn handle_keypress(&mut self, key: KeyCode) -> Option<EditorAction> {
+        match self.mode {
+            EditorMode::Normal => self.handle_normal_mode_keypress(key),
+            EditorMode::Insert => self.handle_insert_mode_keypress(key),
+        }
+    }
+
+    fn handle_normal_mode_keypress(&mut self, key: KeyCode) -> Option<EditorAction> {
         match key {
             KeyCode::Char('q') => Some(EditorAction::Quit),
             KeyCode::Char('i') => {
@@ -50,6 +57,16 @@ impl Editor {
             }
             KeyCode::Char('l') => {
                 self.move_cursor_right();
+                None
+            }
+            _ => None,
+        }
+    }
+
+    fn handle_insert_mode_keypress(&mut self, key: KeyCode) -> Option<EditorAction> {
+        match key {
+            KeyCode::Esc => {
+                self.mode = EditorMode::Normal;
                 None
             }
             _ => None,
@@ -85,7 +102,6 @@ pub enum EditorAction {
 }
 
 #[cfg(test)]
-
 mod normal_mode_key_tests {
     use super::*;
 
@@ -134,5 +150,20 @@ mod normal_mode_key_tests {
 
         editor.handle_keypress(KeyCode::Char('i'));
         assert_eq!(editor.mode(), &EditorMode::Insert);
+    }
+}
+
+#[cfg(test)]
+mod insert_mode_key_tests {
+    use super::*;
+
+    #[test]
+    fn test_editor_handles_return_to_normal_mode() {
+        let mut editor = Editor::new(Buffer::new(""));
+
+        editor.handle_keypress(KeyCode::Char('i'));
+        editor.handle_keypress(KeyCode::Esc);
+
+        assert_eq!(editor.mode(), &EditorMode::Normal);
     }
 }
