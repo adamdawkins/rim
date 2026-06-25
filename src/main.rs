@@ -1,11 +1,12 @@
 use std::fs;
+use std::io::stdout;
 
-use crossterm::terminal;
+use crossterm::{cursor, execute, style, terminal};
 
 fn main() {
     let buffer = fs::read_to_string("foo.txt").unwrap();
-    let _terminal = Terminal::new();
-    println!("{}", buffer);
+    let terminal = Terminal::new();
+    terminal.render(&buffer);
 }
 
 pub struct Terminal;
@@ -14,6 +15,22 @@ impl Terminal {
     pub fn new() -> Self {
         terminal::enable_raw_mode().unwrap();
         Terminal
+    }
+
+    pub fn render(&self, buffer: &str) {
+        self.clear_screen();
+        for line in buffer.lines() {
+            execute!(stdout(), style::Print(format!("{}\r\n", line))).unwrap();
+        }
+    }
+
+    fn clear_screen(&self) {
+        execute!(
+            stdout(),
+            terminal::Clear(terminal::ClearType::All),
+            cursor::MoveTo(0, 0)
+        )
+        .unwrap();
     }
 }
 
