@@ -38,6 +38,23 @@ impl Buffer {
     pub fn lines(&self) -> &Vec<String> {
         &self.lines
     }
+
+    pub fn insert_at_position(&mut self, c: char, row: u16, col: u16) {
+        let row = row as usize;
+        let col = col as usize;
+
+        if row >= self.lines.len() {
+            return;
+        }
+
+        let line = &mut self.lines[row];
+
+        if col > line.len() {
+            return;
+        }
+
+        line.insert(col, c);
+    }
 }
 
 impl fmt::Display for Buffer {
@@ -150,6 +167,13 @@ bar";
         let buffer = Buffer::new(contents);
 
         assert_eq!(buffer.to_string(), contents);
+    }
+
+    fn test_insert_at_position_inserts_char() {
+        let mut buffer = Buffer::new("foo\nbar");
+        buffer.insert_at_position('x', 0, 1);
+
+        assert_eq!(buffer.to_string(), "fxoo\nbar");
     }
 }
 
