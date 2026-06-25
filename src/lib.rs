@@ -14,7 +14,17 @@ impl Buffer {
     }
 
     pub fn max_col(&self, row: usize) -> usize {
-        self.lines[row].len() - 1
+        if self.lines.is_empty() {
+            return 0;
+        }
+
+        let len = self.lines[row].len();
+
+        if len == 0 {
+            0
+        } else {
+            len - 1
+        }
     }
 
     pub fn lines(&self) -> &Vec<String> {
@@ -110,6 +120,12 @@ threethline";
         let buffer = Buffer::new(contents);
 
         assert_eq!(buffer.max_col(0), 23);
+    }
+
+    #[test]
+    fn test_buffer_max_col_of_empty_line() {
+        let buffer = Buffer::new("");
+        assert_eq!(buffer.max_col(0), 0);
     }
 }
 
