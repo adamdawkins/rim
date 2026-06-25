@@ -25,23 +25,21 @@ fn main() {
                 }
                 if key_event.code == KeyCode::Char('j') {
                     editor.move_cursor_down();
-                    terminal.render(&editor.buffer(), &editor.cursor());
                 }
                 if key_event.code == KeyCode::Char('k') {
                     editor.move_cursor_up();
-                    terminal.render(&editor.buffer(), &editor.cursor());
                 }
                 if key_event.code == KeyCode::Char('l') {
                     editor.move_cursor_right();
-                    terminal.render(&editor.buffer(), &editor.cursor());
                 }
                 if key_event.code == KeyCode::Char('h') {
                     editor.move_cursor_left();
-                    terminal.render(&editor.buffer(), &editor.cursor());
                 }
             }
             _ => {}
         }
+
+        terminal.render(&editor.buffer(), &editor.cursor());
     }
 }
 
