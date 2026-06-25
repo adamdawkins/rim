@@ -49,7 +49,7 @@ impl Terminal {
     }
 
     pub fn move_cursor_down(&mut self) {
-        self.cursor.row += 1;
+        self.cursor.down();
         self.render_cursor();
     }
 
