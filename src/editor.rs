@@ -22,9 +22,13 @@ impl Editor {
     pub fn cursor(&self) -> &Cursor {
         &self.cursor
     }
+
+    pub fn move_cursor_down(&mut self) {
+        self.cursor.down(&self.buffer);
+    }
 }
 
 enum EditorMode {
     Normal,
-    Insert,
+    // Insert,
 }
