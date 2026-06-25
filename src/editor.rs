@@ -32,6 +32,10 @@ impl Editor {
     pub fn handle_keypress(&mut self, key: KeyCode) -> Option<EditorAction> {
         match key {
             KeyCode::Char('q') => Some(EditorAction::Quit),
+            KeyCode::Char('i') => {
+                self.mode = EditorMode::Insert;
+                None
+            }
             KeyCode::Char('h') => {
                 self.move_cursor_left();
                 None
@@ -122,5 +126,13 @@ mod tests {
         let mut editor = Editor::new(Buffer::new("hello\nworld"));
         editor.handle_keypress(KeyCode::Char('l'));
         assert_eq!(editor.cursor().col(), 1);
+    }
+
+    #[test]
+    fn test_editor_handle_switching_to_insert_mode() {
+        let mut editor = Editor::new(Buffer::new(""));
+
+        editor.handle_keypress(KeyCode::Char('i'));
+        assert_eq!(editor.mode(), &EditorMode::Insert);
     }
 }
