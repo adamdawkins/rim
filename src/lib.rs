@@ -33,7 +33,10 @@ impl Cursor {
         Cursor { row, col }
     }
 
-    pub fn down(&mut self) {
+    pub fn down(&mut self, buffer: &Buffer) {
+        if self.row as usize >= buffer.max_row() {
+            return;
+        }
         self.row += 1;
     }
 
@@ -139,11 +142,24 @@ mod cursor_tests {
 
     #[test]
     fn test_cursor_goes_down() {
-        let mut cursor = Cursor::new(1, 10);
+        let buffer = Buffer::new("0\n1\n2");
+        let mut cursor = Cursor::new(1, 0);
 
-        cursor.down();
+        cursor.down(&buffer);
 
         assert_eq!(cursor.row(), 2);
-        assert_eq!(cursor.col(), 10);
+        assert_eq!(cursor.col(), 0);
+    }
+
+    #[test]
+    fn test_cursor_cannot_go_down_from_last_row() {
+        let buffer = Buffer::new("0\n1\n2");
+
+        let mut cursor = Cursor::new(2, 0);
+
+        cursor.down(&buffer);
+
+        assert_eq!(cursor.row(), 2);
+        assert_eq!(cursor.col(), 0);
     }
 }
