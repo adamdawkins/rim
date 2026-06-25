@@ -65,7 +65,7 @@ impl Editor {
     }
 }
 
-enum EditorMode {
+pub enum EditorMode {
     Normal,
     // Insert,
 }
