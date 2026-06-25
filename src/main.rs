@@ -35,7 +35,8 @@ fn main() {
                     terminal.move_cursor_right(&editor.buffer());
                 }
                 if key_event.code == KeyCode::Char('h') {
-                    terminal.move_cursor_left();
+                    editor.move_cursor_left();
+                    terminal.render(&editor.buffer(), &editor.cursor());
                 }
             }
             _ => {}
