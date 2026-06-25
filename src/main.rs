@@ -13,7 +13,7 @@ fn main() {
     let contents = fs::read_to_string("foo.txt").unwrap();
     let buffer = Buffer::new(&contents);
     let mut terminal = Terminal::new();
-    let editor = Editor::new(buffer);
+    let mut editor = Editor::new(buffer);
 
     terminal.render(&editor.buffer(), &editor.cursor());
 
@@ -24,7 +24,8 @@ fn main() {
                     break;
                 }
                 if key_event.code == KeyCode::Char('j') {
-                    terminal.move_cursor_down(&editor.buffer());
+                    editor.move_cursor_down();
+                    terminal.render(&editor.buffer(), &editor.cursor());
                 }
                 if key_event.code == KeyCode::Char('k') {
                     terminal.move_cursor_up(&editor.buffer());
