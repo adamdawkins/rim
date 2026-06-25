@@ -1,3 +1,6 @@
+use std::fs;
+
 fn main() {
-    println!("Hello, world!");
+    let buffer = fs::read_to_string("foo.txt").unwrap();
+    println!("{}", buffer);
 }
