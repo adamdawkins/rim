@@ -9,13 +9,16 @@ use crossterm::{
 
 fn main() {
     let buffer = fs::read_to_string("foo.txt").unwrap();
-    let terminal = Terminal::new();
+    let mut terminal = Terminal::new();
     terminal.render(&buffer);
     loop {
         match read().unwrap() {
             Event::Key(key_event) => {
                 if key_event.code == KeyCode::Char('q') {
                     break;
+                }
+                if key_event.code == KeyCode::Char('j') {
+                    terminal.move_cursor_down();
                 }
             }
             _ => {}
@@ -42,6 +45,11 @@ impl Terminal {
             execute!(stdout(), style::Print(format!("{}\r\n", line))).unwrap();
         }
 
+        self.render_cursor();
+    }
+
+    pub fn move_cursor_down(&mut self) {
+        self.cursor.row += 1;
         self.render_cursor();
     }
 
