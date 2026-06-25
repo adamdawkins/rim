@@ -7,11 +7,12 @@
 - [x] [2026-06-25] `j`
 - [x] [2026-06-25] `k`
 - [ ] `h`
-- [ ] `l`
+- [x] [2026-06-25] `l`
 - [ ] Add boundary to `h`
 - [ ] Add boundary to `k`
 - [ ] Add boundary to `l`
 - [ ] Add boundary to `j`
+- [ ] When moving up and down beyond end of line, cursor should move to the end of the line (in normal mode)
 - [ ] Write a brand new file
 - [ ] Insert mode
 - [ ] `:w`
