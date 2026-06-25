@@ -47,7 +47,7 @@ impl Cursor {
         }
     }
 
-    pub fn up(&mut self) {
+    pub fn up(&mut self, buffer: &Buffer) {
         if self.row == 0 {
             return;
         }
@@ -132,19 +132,28 @@ mod cursor_tests {
 
     #[test]
     fn test_cursor_goes_up() {
-        let mut cursor = Cursor::new(1, 10);
+        let buffer = Buffer::new("000\n111\n2");
+        let mut cursor = Cursor::new(1, 2);
 
-        cursor.up();
+        cursor.up(&buffer);
 
         assert_eq!(cursor.row(), 0);
-        assert_eq!(cursor.col(), 10);
+        assert_eq!(cursor.col(), 2);
     }
 
     #[test]
     fn test_cursor_cannot_go_up_from_first_row() {
-        let mut cursor = Cursor::new(0, 10);
+        let buffer = Buffer::new("000\n111\n2");
+        let mut cursor = Cursor::new(0, 2);
 
-        cursor.up();
+        cursor.up(&buffer);
+
+        assert_eq!(cursor.row(), 0);
+        assert_eq!(cursor.col(), 2);
+    }
+
+
+        cursor.up(&buffer);
 
         assert_eq!(cursor.row(), 0);
         assert_eq!(cursor.col(), 10);

@@ -26,7 +26,7 @@ fn main() {
                     terminal.move_cursor_down(&buffer);
                 }
                 if key_event.code == KeyCode::Char('k') {
-                    terminal.move_cursor_up();
+                    terminal.move_cursor_up(&buffer);
                 }
                 if key_event.code == KeyCode::Char('l') {
                     terminal.move_cursor_right(&buffer);
@@ -67,8 +67,8 @@ impl Terminal {
         self.render_cursor();
     }
 
-    pub fn move_cursor_up(&mut self) {
-        self.cursor.up();
+    pub fn move_cursor_up(&mut self, buffer: &Buffer) {
+        self.cursor.up(&buffer);
         self.render_cursor();
     }
 
