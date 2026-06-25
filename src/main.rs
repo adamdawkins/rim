@@ -48,7 +48,7 @@ pub struct Terminal;
 impl Terminal {
     pub fn new() -> Self {
         terminal::enable_raw_mode().unwrap();
-        Terminal {}
+        Terminal
     }
 
     pub fn render(&self, buffer: &Buffer, cursor: &Cursor) {
