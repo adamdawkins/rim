@@ -7,6 +7,8 @@ use crossterm::{
     execute, style, terminal,
 };
 
+use rim::Cursor;
+
 fn main() {
     let buffer = fs::read_to_string("foo.txt").unwrap();
     let mut terminal = Terminal::new();
@@ -98,37 +100,5 @@ impl Terminal {
 impl Drop for Terminal {
     fn drop(&mut self) {
         terminal::disable_raw_mode().unwrap();
-    }
-}
-
-#[derive(Default)]
-pub struct Cursor {
-    row: u16,
-    col: u16,
-}
-
-impl Cursor {
-    pub fn down(&mut self) {
-        self.row += 1;
-    }
-
-    pub fn up(&mut self) {
-        self.row -= 1;
-    }
-
-    pub fn left(&mut self) {
-        self.col -= 1;
-    }
-
-    pub fn right(&mut self) {
-        self.col += 1;
-    }
-
-    pub fn row(&self) -> u16 {
-        self.row
-    }
-
-    pub fn col(&self) -> u16 {
-        self.col
     }
 }
