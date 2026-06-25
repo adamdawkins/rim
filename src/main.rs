@@ -28,7 +28,8 @@ fn main() {
                     terminal.render(&editor.buffer(), &editor.cursor());
                 }
                 if key_event.code == KeyCode::Char('k') {
-                    terminal.move_cursor_up(&editor.buffer());
+                    editor.move_cursor_up();
+                    terminal.render(&editor.buffer(), &editor.cursor());
                 }
                 if key_event.code == KeyCode::Char('l') {
                     terminal.move_cursor_right(&editor.buffer());
