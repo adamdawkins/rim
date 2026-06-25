@@ -61,7 +61,8 @@ mod tests {
 
         cursor.left();
 
-        assert_eq!([cursor.row(), cursor.col()], [1, 0]);
+        assert_eq!(cursor.row(), 1);
+        assert_eq!(cursor.col(), 0);
     }
 
     #[test]
@@ -70,7 +71,8 @@ mod tests {
 
         cursor.up();
 
-        assert_eq!([cursor.row(), cursor.col()], [0, 10]);
+        assert_eq!(cursor.row(), 0);
+        assert_eq!(cursor.col(), 10);
     }
 
     #[test]
@@ -79,6 +81,7 @@ mod tests {
 
         cursor.up();
 
-        assert_eq!([cursor.row(), cursor.col()], [0, 10]);
+        assert_eq!(cursor.row(), 0);
+        assert_eq!(cursor.col(), 10);
     }
 }
