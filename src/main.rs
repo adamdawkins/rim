@@ -67,26 +67,6 @@ impl Terminal {
         Terminal::render_cursor(cursor);
     }
 
-    pub fn move_cursor_down(&mut self, buffer: &Buffer) {
-        self.cursor.down(&buffer);
-        Terminal::render_cursor(&self.cursor);
-    }
-
-    pub fn move_cursor_up(&mut self, buffer: &Buffer) {
-        self.cursor.up(&buffer);
-        Terminal::render_cursor(&self.cursor);
-    }
-
-    pub fn move_cursor_right(&mut self, buffer: &Buffer) {
-        self.cursor.right(&buffer);
-        Terminal::render_cursor(&self.cursor);
-    }
-
-    pub fn move_cursor_left(&mut self) {
-        self.cursor.left();
-        Terminal::render_cursor(&self.cursor);
-    }
-
     fn clear_screen(&self) {
         execute!(
             stdout(),
