@@ -30,6 +30,10 @@ impl Editor {
     pub fn move_cursor_down(&mut self) {
         self.cursor.down(&self.buffer);
     }
+
+    pub fn move_cursor_left(&mut self) {
+        self.cursor.left();
+    }
 }
 
 enum EditorMode {
