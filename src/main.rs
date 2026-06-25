@@ -60,27 +60,27 @@ impl Terminal {
             execute!(stdout(), style::Print(format!("{}\r\n", line))).unwrap();
         }
 
-        self.render_cursor();
+        Terminal::render_cursor(&self.cursor);
     }
 
     pub fn move_cursor_down(&mut self, buffer: &Buffer) {
         self.cursor.down(&buffer);
-        self.render_cursor();
+        Terminal::render_cursor(&self.cursor);
     }
 
     pub fn move_cursor_up(&mut self, buffer: &Buffer) {
         self.cursor.up(&buffer);
-        self.render_cursor();
+        Terminal::render_cursor(&self.cursor);
     }
 
     pub fn move_cursor_right(&mut self, buffer: &Buffer) {
         self.cursor.right(&buffer);
-        self.render_cursor();
+        Terminal::render_cursor(&self.cursor);
     }
 
     pub fn move_cursor_left(&mut self) {
         self.cursor.left();
-        self.render_cursor();
+        Terminal::render_cursor(&self.cursor);
     }
 
     fn clear_screen(&self) {
@@ -92,12 +92,8 @@ impl Terminal {
         .unwrap();
     }
 
-    fn render_cursor(&self) {
-        execute!(
-            stdout(),
-            cursor::MoveTo(self.cursor.col(), self.cursor.row())
-        )
-        .unwrap();
+    fn render_cursor(cursor: &Cursor) {
+        execute!(stdout(), cursor::MoveTo(cursor.col(), cursor.row())).unwrap();
     }
 }
 
