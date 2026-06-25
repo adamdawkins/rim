@@ -72,7 +72,7 @@ impl Editor {
 #[derive(Debug, PartialEq)]
 pub enum EditorMode {
     Normal,
-    // Insert,
+    Insert,
 }
 
 #[derive(Debug, PartialEq)]
