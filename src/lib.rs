@@ -8,6 +8,10 @@ impl Buffer {
 
         Buffer { lines }
     }
+
+    pub fn max_row(&self) -> usize {
+        self.lines.len() - 1
+    }
 }
 
 #[derive(Default)]
@@ -55,6 +59,22 @@ impl Cursor {
 }
 
 #[cfg(test)]
+mod buffer_tests {
+    use super::*;
+
+    #[test]
+    fn test_buffer_max_row() {
+        let contents = "\
+zeroth line
+oneth line
+threethline";
+        let buffer = Buffer::new(contents);
+
+        assert_eq!(buffer.max_row(), 2);
+    }
+}
+
+#[cfg(test)]
 mod cursor_tests {
     use super::*;
 
@@ -94,6 +114,16 @@ mod cursor_tests {
         cursor.up();
 
         assert_eq!(cursor.row(), 0);
+        assert_eq!(cursor.col(), 10);
+    }
+
+    #[test]
+    fn test_cursor_goes_down() {
+        let mut cursor = Cursor::new(1, 10);
+
+        cursor.down();
+
+        assert_eq!(cursor.row(), 2);
         assert_eq!(cursor.col(), 10);
     }
 }
