@@ -11,8 +11,11 @@ use rim::{Buffer, Cursor};
 
 fn main() {
     let contents = fs::read_to_string("foo.txt").unwrap();
+    let buffer = Buffer::new(&contents);
     let mut terminal = Terminal::new();
-    terminal.render(&contents);
+
+    terminal.render(&buffer);
+
     loop {
         match read().unwrap() {
             Event::Key(key_event) => {
@@ -49,7 +52,7 @@ impl Terminal {
         }
     }
 
-    pub fn render(&self, buffer: &str) {
+    pub fn render(&self, buffer: &Buffer) {
         self.clear_screen();
 
         for line in buffer.lines() {
