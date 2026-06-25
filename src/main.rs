@@ -2,7 +2,7 @@ use std::fs;
 
 use crossterm::event::{read, Event, KeyCode};
 
-use rim::{editor::Editor, terminal::Terminal, Buffer};
+use rim::{Buffer, Editor, Terminal};
 
 fn main() {
     let contents = fs::read_to_string("foo.txt").unwrap();
