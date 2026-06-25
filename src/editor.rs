@@ -23,6 +23,10 @@ impl Editor {
         &self.cursor
     }
 
+    pub fn move_cursor_up(&mut self) {
+        self.cursor.up(&self.buffer);
+    }
+
     pub fn move_cursor_down(&mut self) {
         self.cursor.down(&self.buffer);
     }
