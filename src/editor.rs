@@ -69,6 +69,10 @@ impl Editor {
                 self.mode = EditorMode::Normal;
                 None
             }
+            KeyCode::Char(c) => {
+                self.insert_char(c);
+                None
+            }
             _ => None,
         }
     }
@@ -86,6 +90,13 @@ impl Editor {
     }
 
     fn move_cursor_right(&mut self) {
+        self.cursor.right(&self.buffer);
+    }
+
+    fn insert_char(&mut self, c: char) {
+        self.buffer
+            .insert_at_position(c, self.cursor.row(), self.cursor.col());
+
         self.cursor.right(&self.buffer);
     }
 }
@@ -165,5 +176,20 @@ mod insert_mode_key_tests {
         editor.handle_keypress(KeyCode::Esc);
 
         assert_eq!(editor.mode(), &EditorMode::Normal);
+    }
+
+    #[test]
+    fn test_editor_inserts_normal_characters() {
+        let mut editor = Editor::new(Buffer::new("Hello"));
+
+        editor.handle_keypress(KeyCode::Char('i'));
+        editor.handle_keypress(KeyCode::Char('h'));
+        editor.handle_keypress(KeyCode::Char('j'));
+        editor.handle_keypress(KeyCode::Char('k'));
+        editor.handle_keypress(KeyCode::Char('l'));
+        editor.handle_keypress(KeyCode::Char('i'));
+        editor.handle_keypress(KeyCode::Char('q'));
+
+        assert_eq!(editor.buffer().to_string(), "hjkliqHello");
     }
 }
