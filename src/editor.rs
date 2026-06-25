@@ -1,5 +1,7 @@
 use crate::{Buffer, Cursor};
 
+use crossterm::event::KeyCode;
+
 pub struct Editor {
     buffer: Buffer,
     cursor: Cursor,
@@ -23,6 +25,13 @@ impl Editor {
         &self.cursor
     }
 
+    pub fn handle_keypress(&mut self, key: KeyCode) -> Option<EditorAction> {
+        match key {
+            KeyCode::Char('q') => Some(EditorAction::Quit),
+            _ => None,
+        }
+    }
+
     pub fn move_cursor_up(&mut self) {
         self.cursor.up(&self.buffer);
     }
@@ -43,4 +52,24 @@ impl Editor {
 enum EditorMode {
     Normal,
     // Insert,
+}
+
+#[derive(Debug, PartialEq)]
+pub enum EditorAction {
+    Quit,
+}
+
+#[cfg(test)]
+
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_editor_handles_quit() {
+        let mut editor = Editor::new(Buffer::new(""));
+
+        let action = editor.handle_keypress(KeyCode::Char('q'));
+
+        assert_eq!(action, Some(EditorAction::Quit));
+    }
 }
