@@ -12,7 +12,7 @@ use rim::{editor::Editor, Buffer, Cursor};
 fn main() {
     let contents = fs::read_to_string("foo.txt").unwrap();
     let buffer = Buffer::new(&contents);
-    let mut terminal = Terminal::new();
+    let terminal = Terminal::new();
     let mut editor = Editor::new(buffer);
 
     terminal.render(&editor.buffer(), &editor.cursor());
