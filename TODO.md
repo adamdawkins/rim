@@ -19,5 +19,6 @@
 - [ ] `:q`
 - [ ] `:e`
 - [ ] `:wq`
+- [ ] Visual mode (selection)
 - [ ] Other motion commands?
 - [ ] Delete line?
