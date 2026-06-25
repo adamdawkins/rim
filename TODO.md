@@ -3,22 +3,23 @@
 - [x] [2026-06-25] render the contents of a file
 - [x] [2026-06-25] Improve output of file contents like text editor (clear new lines etc)
 - [x] [2026-06-25] Render a cursor
-- [/] cursor movement
+- [x] [2026-06-25] cursor movement
 - [x] [2026-06-25] `j`
 - [x] [2026-06-25] `k`
-- [ ] `h`
+- [x] [2026-06-25] `h`
 - [x] [2026-06-25] `l`
-- [ ] Add boundary to `h`
-- [ ] Add boundary to `k`
-- [ ] Add boundary to `l`
-- [ ] Add boundary to `j`
-- [ ] When moving up and down beyond end of line, cursor should move to the end of the line (in normal mode)
-- [ ] Write a brand new file
+- [x] [2026-06-25] Add boundary to `h`
+- [x] [2026-06-25] Add boundary to `k`
+- [x] [2026-06-25] Add boundary to `l`
+- [x] [2026-06-25] Add boundary to `j`
+- [x] [2026-06-25] When moving up and down beyond end of line, cursor should move to the end of the line (in normal mode)
 - [ ] Insert mode
 - [ ] `:w`
 - [ ] `:q`
 - [ ] `:e`
 - [ ] `:wq`
+- [ ] Write a brand new file
 - [ ] Visual mode (selection)
 - [ ] Other motion commands?
 - [ ] Delete line?
+- [ ] open with file from command line (`rim file.txt`)
