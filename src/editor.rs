@@ -25,6 +25,10 @@ impl Editor {
         &self.cursor
     }
 
+    pub fn mode(&self) -> &EditorMode {
+        &self.mode
+    }
+
     pub fn handle_keypress(&mut self, key: KeyCode) -> Option<EditorAction> {
         match key {
             KeyCode::Char('q') => Some(EditorAction::Quit),
