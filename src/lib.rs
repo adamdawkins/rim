@@ -169,6 +169,7 @@ bar";
         assert_eq!(buffer.to_string(), contents);
     }
 
+    #[test]
     fn test_insert_at_position_inserts_char() {
         let mut buffer = Buffer::new("foo\nbar");
         buffer.insert_at_position('x', 0, 1);
