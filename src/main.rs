@@ -24,7 +24,9 @@ fn run(terminal: Terminal, mut editor: Editor) {
                 KeyCode::Char('k') => editor.move_cursor_up(),
                 KeyCode::Char('l') => editor.move_cursor_right(),
                 KeyCode::Char('h') => editor.move_cursor_left(),
-                _ => {}
+                key => {
+                    editor.handle_keypress(key);
+                }
             },
             _ => {}
         }
