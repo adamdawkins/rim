@@ -23,6 +23,9 @@ fn main() {
                 if key_event.code == KeyCode::Char('k') {
                     terminal.move_cursor_up();
                 }
+                if key_event.code == KeyCode::Char('l') {
+                    terminal.move_cursor_right();
+                }
             }
             _ => {}
         }
@@ -61,6 +64,11 @@ impl Terminal {
         self.render_cursor();
     }
 
+    pub fn move_cursor_right(&mut self) {
+        self.cursor.right();
+        self.render_cursor();
+    }
+
     fn clear_screen(&self) {
         execute!(
             stdout(),
@@ -94,5 +102,9 @@ impl Cursor {
 
     pub fn up(&mut self) {
         self.row -= 1;
+    }
+
+    pub fn right(&mut self) {
+        self.col += 1;
     }
 }
