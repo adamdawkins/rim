@@ -34,6 +34,10 @@ impl Editor {
     pub fn move_cursor_left(&mut self) {
         self.cursor.left();
     }
+
+    pub fn move_cursor_right(&mut self) {
+        self.cursor.right(&self.buffer);
+    }
 }
 
 enum EditorMode {
