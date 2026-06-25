@@ -1,6 +1,6 @@
 use std::fs;
 
-use crossterm::event::{read, Event, KeyCode};
+use crossterm::event::{read, Event};
 
 use rim::{editor::EditorAction, Buffer, Editor, Terminal};
 
