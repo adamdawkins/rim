@@ -45,16 +45,12 @@ fn main() {
     }
 }
 
-pub struct Terminal {
-    cursor: Cursor,
-}
+pub struct Terminal;
 
 impl Terminal {
     pub fn new() -> Self {
         terminal::enable_raw_mode().unwrap();
-        Terminal {
-            cursor: Cursor::default(),
-        }
+        Terminal {}
     }
 
     pub fn render(&self, buffer: &Buffer, cursor: &Cursor) {
