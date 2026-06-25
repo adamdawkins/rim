@@ -53,6 +53,12 @@ impl Cursor {
         }
 
         self.row -= 1;
+
+        let next_line_max_col = buffer.max_col(self.row as usize);
+
+        if self.col as usize >= next_line_max_col {
+            self.col = next_line_max_col as u16;
+        }
     }
 
     pub fn left(&mut self) {
@@ -152,6 +158,14 @@ mod cursor_tests {
         assert_eq!(cursor.col(), 2);
     }
 
+    #[test]
+    fn test_cursor_goes_up_to_last_col_of_shorter_line() {
+        let contents = "\
+goes here ^
+cursor here ^";
+
+        let buffer = Buffer::new(contents);
+        let mut cursor = Cursor::new(1, 12);
 
         cursor.up(&buffer);
 
