@@ -105,11 +105,13 @@ impl Terminal {
     }
 
     fn render_status_line(&self, mode: &EditorMode, buffer: &Buffer, cursor: &Cursor) {
-        let left = format!(
-            " {} | {}",
-            mode.to_string().to_uppercase(),
-            buffer.path().unwrap_or("[No Name]")
+        let path = format!(
+            "{}{}",
+            buffer.path().unwrap_or("[No Name]"),
+            if buffer.is_modified() { " [+]" } else { "" }
         );
+
+        let left = format!(" {} | {}", mode.to_string().to_uppercase(), path);
         let right = format!("{}:{} ", cursor.row() + 1, cursor.col() + 1);
 
         let width = terminal::size().unwrap().0 as usize;
