@@ -53,16 +53,9 @@ impl Terminal {
 
     pub fn render(&self, buffer: &Buffer, cursor: &Cursor, mode: &EditorMode) {
         self.clear_screen();
-
         self.set_cursor_style(mode);
-
         self.render_buffer(buffer);
-
-        execute!(
-            stdout(),
-            cursor::MoveTo(cursor.col() as u16, cursor.row() as u16)
-        )
-        .unwrap();
+        self.move_cursor(cursor);
     }
 
     fn clear_screen(&self) {
@@ -86,6 +79,14 @@ impl Terminal {
         for line in buffer.lines() {
             execute!(stdout(), style::Print(format!("{}\r\n", line))).unwrap();
         }
+    }
+
+    fn move_cursor(&self, cursor: &Cursor) {
+        execute!(
+            stdout(),
+            cursor::MoveTo(cursor.col() as u16, cursor.row() as u16)
+        )
+        .unwrap();
     }
 }
 
