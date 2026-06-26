@@ -72,6 +72,13 @@ impl Buffer {
 
         line.remove(col);
     }
+
+    pub fn join_lines(&mut self, row: u16) {
+        let row = row as usize;
+
+        let content = self.lines.remove(row);
+        self.lines[row - 1].push_str(&content);
+    }
 }
 
 impl fmt::Display for Buffer {
@@ -205,6 +212,14 @@ bar";
         buffer.remove_at_position(0, 1);
 
         assert_eq!(buffer.to_string(), "fo\nbar");
+    }
+
+    #[test]
+    fn test_join_lines() {
+        let mut buffer = Buffer::new("foo\nbar");
+        buffer.join_lines(1);
+
+        assert_eq!(buffer.to_string(), "foobar");
     }
 }
 
