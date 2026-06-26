@@ -92,6 +92,11 @@ impl Editor {
                 self.enter();
                 None
             }
+            KeyCode::Tab => {
+                self.insert_char(' ');
+                self.insert_char(' ');
+                None
+            }
             KeyCode::Char(c) => {
                 self.insert_char(c);
                 None
@@ -393,6 +398,24 @@ mod tests {
                 assert_eq!(editor.buffer().to_string(), "Hello\n World");
                 assert_eq!(editor.cursor().row(), 1);
                 assert_eq!(editor.cursor().col(), 0);
+            }
+
+            #[test]
+            // insert two spaces
+            fn tab() {
+                let mut editor = Editor::new(Buffer::new("Hello World"));
+
+                editor.handle_keypress(KeyCode::Char('l'));
+
+                // switch to insert mode
+                editor.handle_keypress(KeyCode::Char('i'));
+
+                // insert a tab character (two spaces)
+                editor.handle_keypress(KeyCode::Tab);
+
+                assert_eq!(editor.buffer().to_string(), "H  ello World");
+                assert_eq!(editor.cursor().row(), 0);
+                assert_eq!(editor.cursor().col(), 3);
             }
         }
     }
