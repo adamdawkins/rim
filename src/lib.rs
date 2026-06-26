@@ -134,6 +134,11 @@ impl Cursor {
         self.col += 1;
     }
 
+    pub fn move_to(&mut self, row: u16, col: u16) {
+        self.row = row;
+        self.col = col;
+    }
+
     pub fn row(&self) -> u16 {
         self.row
     }
