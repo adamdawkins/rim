@@ -69,16 +69,16 @@ impl Editor {
                 self.mode = EditorMode::Normal;
                 None
             }
-            KeyCode::Char(c) => {
-                self.insert_char(c);
-                None
-            }
             KeyCode::Backspace => {
                 self.backspace();
                 None
             }
             KeyCode::Enter => {
                 self.enter();
+                None
+            }
+            KeyCode::Char(c) => {
+                self.insert_char(c);
                 None
             }
             _ => None,
