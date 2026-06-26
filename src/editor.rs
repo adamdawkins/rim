@@ -160,43 +160,47 @@ pub enum EditorAction {
 mod normal_mode_key_tests {
     use super::*;
 
-    #[test]
-    fn test_editor_handles_quit() {
-        let mut editor = Editor::new(Buffer::new(""));
+    mod motions {
+        use super::*;
 
-        let action = editor.handle_keypress(KeyCode::Char('q'));
+        #[test]
+        fn test_editor_handles_quit() {
+            let mut editor = Editor::new(Buffer::new(""));
 
-        assert_eq!(action, Some(EditorAction::Quit));
-    }
+            let action = editor.handle_keypress(KeyCode::Char('q'));
 
-    #[test]
-    fn test_editor_handles_left() {
-        let mut editor = Editor::new(Buffer::new("hello\nworld"));
-        editor.handle_keypress(KeyCode::Char('l'));
-        editor.handle_keypress(KeyCode::Char('h'));
-        assert_eq!(editor.cursor().col(), 0);
-    }
+            assert_eq!(action, Some(EditorAction::Quit));
+        }
 
-    #[test]
-    fn test_editor_handles_down() {
-        let mut editor = Editor::new(Buffer::new("line0\nline1\nline2"));
-        editor.handle_keypress(KeyCode::Char('j'));
-        assert_eq!(editor.cursor().row(), 1);
-    }
+        #[test]
+        fn test_editor_handles_left() {
+            let mut editor = Editor::new(Buffer::new("hello\nworld"));
+            editor.handle_keypress(KeyCode::Char('l'));
+            editor.handle_keypress(KeyCode::Char('h'));
+            assert_eq!(editor.cursor().col(), 0);
+        }
 
-    #[test]
-    fn test_editor_handles_up() {
-        let mut editor = Editor::new(Buffer::new("line0\nline1\nline2"));
-        editor.handle_keypress(KeyCode::Char('j'));
-        editor.handle_keypress(KeyCode::Char('k'));
-        assert_eq!(editor.cursor().row(), 0);
-    }
+        #[test]
+        fn test_editor_handles_down() {
+            let mut editor = Editor::new(Buffer::new("line0\nline1\nline2"));
+            editor.handle_keypress(KeyCode::Char('j'));
+            assert_eq!(editor.cursor().row(), 1);
+        }
 
-    #[test]
-    fn test_editor_handles_right() {
-        let mut editor = Editor::new(Buffer::new("hello\nworld"));
-        editor.handle_keypress(KeyCode::Char('l'));
-        assert_eq!(editor.cursor().col(), 1);
+        #[test]
+        fn test_editor_handles_up() {
+            let mut editor = Editor::new(Buffer::new("line0\nline1\nline2"));
+            editor.handle_keypress(KeyCode::Char('j'));
+            editor.handle_keypress(KeyCode::Char('k'));
+            assert_eq!(editor.cursor().row(), 0);
+        }
+
+        #[test]
+        fn test_editor_handles_right() {
+            let mut editor = Editor::new(Buffer::new("hello\nworld"));
+            editor.handle_keypress(KeyCode::Char('l'));
+            assert_eq!(editor.cursor().col(), 1);
+        }
     }
 
     #[test]
