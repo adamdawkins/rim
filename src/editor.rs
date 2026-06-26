@@ -256,68 +256,72 @@ mod tests {
                 assert_eq!(editor.buffer().to_string(), "hjkliqHello");
             }
 
-            #[test]
-            fn test_editor_removes_character_at_backspace() {
-                let mut editor = Editor::new(Buffer::new("Seppuku"));
+            mod backspace {
+                use super::*;
 
-                // move right
-                editor.handle_keypress(KeyCode::Char('l'));
+                #[test]
+                fn removes_character() {
+                    let mut editor = Editor::new(Buffer::new("Seppuku"));
 
-                // switch to insert mode
-                editor.handle_keypress(KeyCode::Char('i'));
+                    // move right
+                    editor.handle_keypress(KeyCode::Char('l'));
 
-                editor.handle_keypress(KeyCode::Backspace);
+                    // switch to insert mode
+                    editor.handle_keypress(KeyCode::Char('i'));
 
-                assert_eq!(editor.buffer().to_string(), "eppuku");
+                    editor.handle_keypress(KeyCode::Backspace);
+
+                    assert_eq!(editor.buffer().to_string(), "eppuku");
+                }
+
+                #[test]
+                fn moves_cursor_back() {
+                    let mut editor = Editor::new(Buffer::new("Seppuku"));
+
+                    // move right
+                    editor.handle_keypress(KeyCode::Char('l'));
+
+                    // switch to insert mode
+                    editor.handle_keypress(KeyCode::Char('i'));
+
+                    editor.handle_keypress(KeyCode::Backspace);
+
+                    assert_eq!(editor.cursor().col(), 0);
+                }
+
+                #[test]
+                fn at_start_of_file() {
+                    let mut editor = Editor::new(Buffer::new("Hello\nWorld"));
+
+                    // switch to insert mode
+                    editor.handle_keypress(KeyCode::Char('i'));
+
+                    editor.handle_keypress(KeyCode::Backspace);
+                    assert_eq!(editor.buffer().to_string(), "Hello\nWorld");
+                    assert_eq!(editor.cursor().row(), 0);
+                    assert_eq!(editor.cursor().col(), 0);
+                }
+
+                #[test]
+                fn at_start_of_line() {
+                    let mut editor = Editor::new(Buffer::new("01234\nWorld"));
+
+                    // move down
+                    editor.handle_keypress(KeyCode::Char('j'));
+
+                    // switch to insert mode
+                    editor.handle_keypress(KeyCode::Char('i'));
+
+                    editor.handle_keypress(KeyCode::Backspace);
+
+                    assert_eq!(editor.buffer().to_string(), "01234World");
+                    assert_eq!(editor.cursor().row(), 0);
+                    assert_eq!(editor.cursor().col(), 5);
+                }
             }
 
             #[test]
-            fn test_cursor_moves_back_after_backspace() {
-                let mut editor = Editor::new(Buffer::new("Seppuku"));
-
-                // move right
-                editor.handle_keypress(KeyCode::Char('l'));
-
-                // switch to insert mode
-                editor.handle_keypress(KeyCode::Char('i'));
-
-                editor.handle_keypress(KeyCode::Backspace);
-
-                assert_eq!(editor.cursor().col(), 0);
-            }
-
-            #[test]
-            fn test_backspace_at_start_of_file_does_nothing() {
-                let mut editor = Editor::new(Buffer::new("Hello\nWorld"));
-
-                // switch to insert mode
-                editor.handle_keypress(KeyCode::Char('i'));
-
-                editor.handle_keypress(KeyCode::Backspace);
-                assert_eq!(editor.buffer().to_string(), "Hello\nWorld");
-                assert_eq!(editor.cursor().row(), 0);
-                assert_eq!(editor.cursor().col(), 0);
-            }
-
-            #[test]
-            fn test_backspace_at_start_of_line_joins_lines() {
-                let mut editor = Editor::new(Buffer::new("01234\nWorld"));
-
-                // move down
-                editor.handle_keypress(KeyCode::Char('j'));
-
-                // switch to insert mode
-                editor.handle_keypress(KeyCode::Char('i'));
-
-                editor.handle_keypress(KeyCode::Backspace);
-
-                assert_eq!(editor.buffer().to_string(), "01234World");
-                assert_eq!(editor.cursor().row(), 0);
-                assert_eq!(editor.cursor().col(), 5);
-            }
-
-            #[test]
-            fn test_enter_splits_lines_and_moves_cursor() {
+            fn enter() {
                 let mut editor = Editor::new(Buffer::new("Hello World"));
 
                 // move right 5 times
