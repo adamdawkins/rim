@@ -1,7 +1,6 @@
 use std::fmt;
 
 pub mod editor;
-
 pub use editor::Editor;
 
 pub struct Buffer {
