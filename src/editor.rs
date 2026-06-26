@@ -1,3 +1,5 @@
+use std::fmt;
+
 use crate::{Buffer, Cursor};
 
 const TAB_WIDTH: usize = 2;
@@ -185,6 +187,15 @@ impl Editor {
 pub enum EditorMode {
     Normal,
     Insert,
+}
+
+impl fmt::Display for EditorMode {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            EditorMode::Normal => write!(f, "Normal"),
+            EditorMode::Insert => write!(f, "Insert"),
+        }
+    }
 }
 
 #[derive(Debug, PartialEq)]
