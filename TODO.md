@@ -3,7 +3,7 @@
 - [ ] Append mode (`a`)
 - [ ] Delete line?
 - [ ] Other motion commands?
-- [ ] Status Line: Filename
+- [x] [2026-06-26] Status Line: Filename
 - [ ] Status Line: Modified indicator
 - [ ] Visual mode
 - [ ] Write a brand new file
