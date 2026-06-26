@@ -1,7 +1,5 @@
 use crate::{Buffer, Cursor};
 
-use crossterm::event::KeyCode;
-
 const TAB_WIDTH: usize = 2;
 
 pub struct Editor {
@@ -31,49 +29,49 @@ impl Editor {
         &self.mode
     }
 
-    pub fn handle_keypress(&mut self, key: KeyCode) -> Option<EditorAction> {
+    pub fn handle_keypress(&mut self, key: Key) -> Option<EditorAction> {
         match self.mode {
             EditorMode::Normal => self.handle_normal_mode_keypress(key),
             EditorMode::Insert => self.handle_insert_mode_keypress(key),
         }
     }
 
-    fn handle_normal_mode_keypress(&mut self, key: KeyCode) -> Option<EditorAction> {
+    fn handle_normal_mode_keypress(&mut self, key: Key) -> Option<EditorAction> {
         match key {
             // Commands
-            KeyCode::Char('w') => Some(EditorAction::Write),
-            KeyCode::Char('q') => Some(EditorAction::Quit),
-            KeyCode::Char('i') => {
+            Key::Char('w') => Some(EditorAction::Write),
+            Key::Char('q') => Some(EditorAction::Quit),
+            Key::Char('i') => {
                 self.mode = EditorMode::Insert;
                 None
             }
 
             // Motions
-            KeyCode::Char('h') => {
+            Key::Char('h') => {
                 self.move_cursor_left();
                 None
             }
-            KeyCode::Char('j') => {
+            Key::Char('j') => {
                 self.move_cursor_down();
                 None
             }
-            KeyCode::Char('k') => {
+            Key::Char('k') => {
                 self.move_cursor_up();
                 None
             }
-            KeyCode::Char('l') => {
+            Key::Char('l') => {
                 self.move_cursor_right();
                 None
             }
-            KeyCode::Char('0') => {
+            Key::Char('0') => {
                 self.move_cursor_to_start_of_line(self.cursor.row());
                 None
             }
-            KeyCode::Char('^') => {
+            Key::Char('^') => {
                 self.move_cursor_to_first_non_whitespace_char(self.cursor.row());
                 None
             }
-            KeyCode::Char('$') => {
+            Key::Char('$') => {
                 self.move_cursor_to_end_of_line(self.cursor.row());
                 None
             }
@@ -81,27 +79,27 @@ impl Editor {
         }
     }
 
-    fn handle_insert_mode_keypress(&mut self, key: KeyCode) -> Option<EditorAction> {
+    fn handle_insert_mode_keypress(&mut self, key: Key) -> Option<EditorAction> {
         match key {
-            KeyCode::Esc => {
+            Key::Esc => {
                 self.mode = EditorMode::Normal;
                 None
             }
-            KeyCode::Backspace => {
+            Key::Backspace => {
                 self.backspace();
                 None
             }
-            KeyCode::Enter => {
+            Key::Enter => {
                 self.enter();
                 None
             }
-            KeyCode::Tab => {
+            Key::Tab => {
                 for _ in 0..TAB_WIDTH {
                     self.insert_char(' ');
                 }
                 None
             }
-            KeyCode::Char(c) => {
+            Key::Char(c) => {
                 self.insert_char(c);
                 None
             }
@@ -195,6 +193,15 @@ pub enum EditorAction {
     Write,
 }
 
+pub enum Key {
+    Char(char),
+    Esc,
+    Enter,
+    Backspace,
+    Tab,
+    Other,
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -208,37 +215,37 @@ mod tests {
             #[test]
             fn left() {
                 let mut editor = Editor::new(Buffer::new("hello\nworld"));
-                editor.handle_keypress(KeyCode::Char('l'));
-                editor.handle_keypress(KeyCode::Char('h'));
+                editor.handle_keypress(Key::Char('l'));
+                editor.handle_keypress(Key::Char('h'));
                 assert_eq!(editor.cursor().col(), 0);
             }
 
             #[test]
             fn down() {
                 let mut editor = Editor::new(Buffer::new("line0\nline1\nline2"));
-                editor.handle_keypress(KeyCode::Char('j'));
+                editor.handle_keypress(Key::Char('j'));
                 assert_eq!(editor.cursor().row(), 1);
             }
 
             #[test]
             fn up() {
                 let mut editor = Editor::new(Buffer::new("line0\nline1\nline2"));
-                editor.handle_keypress(KeyCode::Char('j'));
-                editor.handle_keypress(KeyCode::Char('k'));
+                editor.handle_keypress(Key::Char('j'));
+                editor.handle_keypress(Key::Char('k'));
                 assert_eq!(editor.cursor().row(), 0);
             }
 
             #[test]
             fn right() {
                 let mut editor = Editor::new(Buffer::new("hello\nworld"));
-                editor.handle_keypress(KeyCode::Char('l'));
+                editor.handle_keypress(Key::Char('l'));
                 assert_eq!(editor.cursor().col(), 1);
             }
 
             #[test]
             fn jump_to_eol() {
                 let mut editor = Editor::new(Buffer::new("012345"));
-                editor.handle_keypress(KeyCode::Char('$'));
+                editor.handle_keypress(Key::Char('$'));
                 assert_eq!(editor.cursor().col(), 5);
             }
 
@@ -246,8 +253,8 @@ mod tests {
             fn jump_to_start_of_line() {
                 let mut editor = Editor::new(Buffer::new("012345"));
 
-                editor.handle_keypress(KeyCode::Char('$'));
-                editor.handle_keypress(KeyCode::Char('0'));
+                editor.handle_keypress(Key::Char('$'));
+                editor.handle_keypress(Key::Char('0'));
 
                 assert_eq!(editor.cursor().col(), 0);
             }
@@ -256,7 +263,7 @@ mod tests {
             fn jump_to_first_non_blank_char() {
                 let mut editor = Editor::new(Buffer::new("    012345"));
 
-                editor.handle_keypress(KeyCode::Char('^'));
+                editor.handle_keypress(Key::Char('^'));
 
                 assert_eq!(editor.cursor().col(), 4);
             }
@@ -269,7 +276,7 @@ mod tests {
             fn quit() {
                 let mut editor = Editor::new(Buffer::new(""));
 
-                let action = editor.handle_keypress(KeyCode::Char('q'));
+                let action = editor.handle_keypress(Key::Char('q'));
 
                 assert_eq!(action, Some(EditorAction::Quit));
             }
@@ -278,7 +285,7 @@ mod tests {
             fn write() {
                 let mut editor = Editor::new(Buffer::new(""));
 
-                let action = editor.handle_keypress(KeyCode::Char('w'));
+                let action = editor.handle_keypress(Key::Char('w'));
 
                 assert_eq!(action, Some(EditorAction::Write));
             }
@@ -287,7 +294,7 @@ mod tests {
             fn insert() {
                 let mut editor = Editor::new(Buffer::new(""));
 
-                editor.handle_keypress(KeyCode::Char('i'));
+                editor.handle_keypress(Key::Char('i'));
                 assert_eq!(editor.mode(), &EditorMode::Insert);
             }
         }
@@ -303,8 +310,8 @@ mod tests {
             fn esc() {
                 let mut editor = Editor::new(Buffer::new(""));
 
-                editor.handle_keypress(KeyCode::Char('i'));
-                editor.handle_keypress(KeyCode::Esc);
+                editor.handle_keypress(Key::Char('i'));
+                editor.handle_keypress(Key::Esc);
 
                 assert_eq!(editor.mode(), &EditorMode::Normal);
             }
@@ -318,14 +325,14 @@ mod tests {
                 let mut editor = Editor::new(Buffer::new("Hello"));
 
                 // switch to insert mode
-                editor.handle_keypress(KeyCode::Char('i'));
+                editor.handle_keypress(Key::Char('i'));
 
-                editor.handle_keypress(KeyCode::Char('h'));
-                editor.handle_keypress(KeyCode::Char('j'));
-                editor.handle_keypress(KeyCode::Char('k'));
-                editor.handle_keypress(KeyCode::Char('l'));
-                editor.handle_keypress(KeyCode::Char('i'));
-                editor.handle_keypress(KeyCode::Char('q'));
+                editor.handle_keypress(Key::Char('h'));
+                editor.handle_keypress(Key::Char('j'));
+                editor.handle_keypress(Key::Char('k'));
+                editor.handle_keypress(Key::Char('l'));
+                editor.handle_keypress(Key::Char('i'));
+                editor.handle_keypress(Key::Char('q'));
 
                 assert_eq!(editor.buffer().to_string(), "hjkliqHello");
             }
@@ -338,12 +345,12 @@ mod tests {
                     let mut editor = Editor::new(Buffer::new("Seppuku"));
 
                     // move right
-                    editor.handle_keypress(KeyCode::Char('l'));
+                    editor.handle_keypress(Key::Char('l'));
 
                     // switch to insert mode
-                    editor.handle_keypress(KeyCode::Char('i'));
+                    editor.handle_keypress(Key::Char('i'));
 
-                    editor.handle_keypress(KeyCode::Backspace);
+                    editor.handle_keypress(Key::Backspace);
 
                     assert_eq!(editor.buffer().to_string(), "eppuku");
                 }
@@ -353,12 +360,12 @@ mod tests {
                     let mut editor = Editor::new(Buffer::new("Seppuku"));
 
                     // move right
-                    editor.handle_keypress(KeyCode::Char('l'));
+                    editor.handle_keypress(Key::Char('l'));
 
                     // switch to insert mode
-                    editor.handle_keypress(KeyCode::Char('i'));
+                    editor.handle_keypress(Key::Char('i'));
 
-                    editor.handle_keypress(KeyCode::Backspace);
+                    editor.handle_keypress(Key::Backspace);
 
                     assert_eq!(editor.cursor().col(), 0);
                 }
@@ -368,9 +375,9 @@ mod tests {
                     let mut editor = Editor::new(Buffer::new("Hello\nWorld"));
 
                     // switch to insert mode
-                    editor.handle_keypress(KeyCode::Char('i'));
+                    editor.handle_keypress(Key::Char('i'));
 
-                    editor.handle_keypress(KeyCode::Backspace);
+                    editor.handle_keypress(Key::Backspace);
                     assert_eq!(editor.buffer().to_string(), "Hello\nWorld");
                     assert_eq!(editor.cursor().row(), 0);
                     assert_eq!(editor.cursor().col(), 0);
@@ -381,12 +388,12 @@ mod tests {
                     let mut editor = Editor::new(Buffer::new("01234\nWorld"));
 
                     // move down
-                    editor.handle_keypress(KeyCode::Char('j'));
+                    editor.handle_keypress(Key::Char('j'));
 
                     // switch to insert mode
-                    editor.handle_keypress(KeyCode::Char('i'));
+                    editor.handle_keypress(Key::Char('i'));
 
-                    editor.handle_keypress(KeyCode::Backspace);
+                    editor.handle_keypress(Key::Backspace);
 
                     assert_eq!(editor.buffer().to_string(), "01234World");
                     assert_eq!(editor.cursor().row(), 0);
@@ -400,14 +407,14 @@ mod tests {
 
                 // move right 5 times
                 for _ in 0..5 {
-                    editor.handle_keypress(KeyCode::Char('l'));
+                    editor.handle_keypress(Key::Char('l'));
                 }
 
                 // switch to insert mode
-                editor.handle_keypress(KeyCode::Char('i'));
+                editor.handle_keypress(Key::Char('i'));
 
                 // insert a newline character
-                editor.handle_keypress(KeyCode::Enter);
+                editor.handle_keypress(Key::Enter);
 
                 assert_eq!(editor.buffer().to_string(), "Hello\n World");
                 assert_eq!(editor.cursor().row(), 1);
@@ -418,9 +425,9 @@ mod tests {
             fn tab() {
                 let mut editor = Editor::new(Buffer::new("Hello World"));
 
-                editor.handle_keypress(KeyCode::Char('l'));
-                editor.handle_keypress(KeyCode::Char('i'));
-                editor.handle_keypress(KeyCode::Tab);
+                editor.handle_keypress(Key::Char('l'));
+                editor.handle_keypress(Key::Char('i'));
+                editor.handle_keypress(Key::Tab);
 
                 // TAB_WIDTH currently is 2, so we expect two spaces to be inserted
                 assert_eq!(editor.buffer().to_string(), "H  ello World");

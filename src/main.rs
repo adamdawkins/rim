@@ -4,12 +4,12 @@ use std::io::stdout;
 use crossterm::{
     cursor,
     cursor::SetCursorStyle,
-    event::{read, Event},
+    event::{read, Event, KeyCode},
     execute, style, terminal,
 };
 
 use rim::{
-    editor::{EditorAction, EditorMode},
+    editor::{EditorAction, EditorMode, Key},
     Buffer, Cursor, Editor,
 };
 
@@ -27,7 +27,7 @@ fn run(terminal: Terminal, mut editor: Editor) {
 
     loop {
         match read().unwrap() {
-            Event::Key(key_event) => match editor.handle_keypress(key_event.code) {
+            Event::Key(key_event) => match editor.handle_keypress(to_key(key_event.code)) {
                 Some(EditorAction::Quit) => {
                     break;
                 }
@@ -88,5 +88,16 @@ impl Drop for Terminal {
     fn drop(&mut self) {
         self.clear_screen();
         terminal::disable_raw_mode().unwrap();
+    }
+}
+
+fn to_key(code: KeyCode) -> Key {
+    match code {
+        KeyCode::Char(c) => Key::Char(c),
+        KeyCode::Backspace => Key::Backspace,
+        KeyCode::Enter => Key::Enter,
+        KeyCode::Esc => Key::Esc,
+        KeyCode::Tab => Key::Tab,
+        _ => Key::Other,
     }
 }
