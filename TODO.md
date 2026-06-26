@@ -1,16 +1,18 @@
 # Vim-esque text editor
 
+- [ ] Command mode
+- [ ] Move Normal `w` to `:w`
+- [ ] Move Normal `q` to `:q`
+- [ ] `:wq`
+- [ ] `:e`
+- [ ] Accept file name to `:w`
 - [ ] Append mode (`a`)
+- [ ] BUG: Empty buffer can't be written to
 - [ ] Delete line?
 - [ ] Other motion commands?
-- [x] [2026-06-26] Status Line: Filename
-- [ ] Status Line: Modified indicator
 - [ ] Visual mode
 - [ ] Write a brand new file
-- [ ] `:e`
-- [ ] `:wq`
 - [ ] open with file from command line (`rim file.txt`)
-- [] Command mode
 - [x] [2026-06-25] Add boundary to `h`
 - [x] [2026-06-25] Add boundary to `j`
 - [x] [2026-06-25] Add boundary to `k`
@@ -27,8 +29,10 @@
 - [x] [2026-06-25] render the contents of a file
 - [x] [2026-06-26] Insert mode
 - [x] [2026-06-26] Status Line: Cursor
+- [x] [2026-06-26] Status Line: Filename
 - [x] [2026-06-26] Status Line: Mode
 - [x] [2026-06-26] `$` jump to end of line
 - [x] [2026-06-26] `0` jump to end of line
 - [x] [2026-06-26] `^` jump to first character of line
 - [x] [2026-06-26] `w`
+- [x] [2026-06-27] Status Line: Modified indicator
