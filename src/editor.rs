@@ -77,6 +77,10 @@ impl Editor {
                 self.backspace();
                 None
             }
+            KeyCode::Enter => {
+                self.enter();
+                None
+            }
             _ => None,
         }
     }
@@ -102,6 +106,14 @@ impl Editor {
             .insert_at_position(c, self.cursor.row(), self.cursor.col());
 
         self.cursor.right(&self.buffer);
+    }
+
+    fn enter(&mut self) {
+        let row = self.cursor.row();
+        let col = self.cursor.col();
+
+        self.buffer.split_line(row, col);
+        self.cursor.move_to(row + 1, 0);
     }
 
     fn backspace(&mut self) {
@@ -285,5 +297,25 @@ mod insert_mode_key_tests {
         assert_eq!(editor.buffer().to_string(), "01234World");
         assert_eq!(editor.cursor().row(), 0);
         assert_eq!(editor.cursor().col(), 5);
+    }
+
+    #[test]
+    fn test_enter_splits_lines_and_moves_cursor() {
+        let mut editor = Editor::new(Buffer::new("Hello World"));
+
+        // move right 5 times
+        for _ in 0..5 {
+            editor.handle_keypress(KeyCode::Char('l'));
+        }
+
+        // switch to insert mode
+        editor.handle_keypress(KeyCode::Char('i'));
+
+        // insert a newline character
+        editor.handle_keypress(KeyCode::Enter);
+
+        assert_eq!(editor.buffer().to_string(), "Hello\n World");
+        assert_eq!(editor.cursor().row(), 1);
+        assert_eq!(editor.cursor().col(), 0);
     }
 }
