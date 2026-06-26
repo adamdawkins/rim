@@ -108,12 +108,7 @@ impl Editor {
         match (self.cursor.row(), self.cursor.col()) {
             (0, 0) => return, // At the start of the file, do nothing
             (row, 0) => {
-                // max_col is the index of the end of the last line,
-                // we add one so that the cursor is placed at the end of the previous line after
-                // joining
-                let previous_line_length = self.buffer.max_col((row - 1) as usize) + 1;
-                self.buffer.join_lines(row);
-                self.cursor.move_to(row - 1, previous_line_length as u16);
+                self.backspace_at_start_of_line();
             }
             _ => {
                 self.buffer
@@ -122,6 +117,16 @@ impl Editor {
                 self.cursor.left();
             }
         }
+    }
+
+    fn backspace_at_start_of_line(&mut self) {
+        let row = self.cursor.row();
+        // max_col is the index of the end of the last line,
+        // we add one so that the cursor is placed at the end of the previous line after
+        // joining
+        let previous_line_length = self.buffer.max_col((row - 1) as usize) + 1;
+        self.buffer.join_lines(row);
+        self.cursor.move_to(row - 1, previous_line_length as u16);
     }
 }
 
