@@ -92,8 +92,8 @@ impl Terminal {
 
     fn render_status_line(&self, mode: &EditorMode, cursor: &Cursor) {
         let status = format!(
-            "Mode: {:?} | Line: {} | Col: {}",
-            mode,
+            " {} | {}:{}",
+            mode.to_string().to_uppercase(),
             cursor.row() + 1,
             cursor.col() + 1
         );
