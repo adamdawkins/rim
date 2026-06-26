@@ -96,9 +96,7 @@ impl Editor {
                 None
             }
             Key::Tab => {
-                for _ in 0..TAB_WIDTH {
-                    self.insert_char(' ');
-                }
+                self.tab();
                 None
             }
             Key::Char(c) => {
@@ -152,6 +150,12 @@ impl Editor {
 
         self.buffer.split_line(row, col);
         self.move_cursor_to_start_of_line(row + 1);
+    }
+
+    fn tab(&mut self) {
+        for _ in 0..TAB_WIDTH {
+            self.insert_char(' ');
+        }
     }
 
     fn backspace(&mut self) {
