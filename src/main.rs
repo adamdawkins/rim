@@ -93,25 +93,20 @@ impl Terminal {
     }
 
     fn render_status_line(&self, mode: &EditorMode, cursor: &Cursor) {
-        let status = format!(
-            " {} | {}:{}",
-            mode.to_string().to_uppercase(),
-            cursor.row() + 1,
-            cursor.col() + 1
-        );
+        let left = format!(" {}", mode.to_string().to_uppercase(),);
+        let right = format!("{}:{} ", cursor.row() + 1, cursor.col() + 1);
 
-        let print_status = format!(
-            "{:<width$}",
-            status,
-            width = terminal::size().unwrap().0 as usize
-        );
+        let width = terminal::size().unwrap().0 as usize;
+        let gap = width.saturating_sub(left.len() + right.len());
+
+        let status = format!("{}{:gap$}{}", left, "", right, gap = gap);
 
         execute!(
             stdout(),
             SetBackgroundColor(Color::Yellow),
             SetForegroundColor(Color::Black),
             cursor::MoveTo(0, terminal::size().unwrap().1 - 1),
-            Print(print_status),
+            Print(status),
             ResetColor
         )
         .unwrap();
