@@ -222,14 +222,18 @@ mod tests {
     mod insert_mode {
         use super::*;
 
-        #[test]
-        fn test_editor_handles_return_to_normal_mode() {
-            let mut editor = Editor::new(Buffer::new(""));
+        mod commands {
+            use super::*;
 
-            editor.handle_keypress(KeyCode::Char('i'));
-            editor.handle_keypress(KeyCode::Esc);
+            #[test]
+            fn test_editor_handles_return_to_normal_mode() {
+                let mut editor = Editor::new(Buffer::new(""));
 
-            assert_eq!(editor.mode(), &EditorMode::Normal);
+                editor.handle_keypress(KeyCode::Char('i'));
+                editor.handle_keypress(KeyCode::Esc);
+
+                assert_eq!(editor.mode(), &EditorMode::Normal);
+            }
         }
 
         #[test]
