@@ -167,15 +167,6 @@ mod tests {
             use super::*;
 
             #[test]
-            fn test_editor_handles_quit() {
-                let mut editor = Editor::new(Buffer::new(""));
-
-                let action = editor.handle_keypress(KeyCode::Char('q'));
-
-                assert_eq!(action, Some(EditorAction::Quit));
-            }
-
-            #[test]
             fn test_editor_handles_left() {
                 let mut editor = Editor::new(Buffer::new("hello\nworld"));
                 editor.handle_keypress(KeyCode::Char('l'));
@@ -206,12 +197,25 @@ mod tests {
             }
         }
 
-        #[test]
-        fn test_editor_handle_switching_to_insert_mode() {
-            let mut editor = Editor::new(Buffer::new(""));
+        mod commands {
+            use super::*;
 
-            editor.handle_keypress(KeyCode::Char('i'));
-            assert_eq!(editor.mode(), &EditorMode::Insert);
+            #[test]
+            fn test_editor_handles_quit() {
+                let mut editor = Editor::new(Buffer::new(""));
+
+                let action = editor.handle_keypress(KeyCode::Char('q'));
+
+                assert_eq!(action, Some(EditorAction::Quit));
+            }
+
+            #[test]
+            fn test_editor_handle_switching_to_insert_mode() {
+                let mut editor = Editor::new(Buffer::new(""));
+
+                editor.handle_keypress(KeyCode::Char('i'));
+                assert_eq!(editor.mode(), &EditorMode::Insert);
+            }
         }
     }
 
