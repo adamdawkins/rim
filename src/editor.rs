@@ -201,7 +201,7 @@ mod tests {
             use super::*;
 
             #[test]
-            fn test_editor_handles_quit() {
+            fn quit() {
                 let mut editor = Editor::new(Buffer::new(""));
 
                 let action = editor.handle_keypress(KeyCode::Char('q'));
@@ -210,7 +210,7 @@ mod tests {
             }
 
             #[test]
-            fn test_editor_handle_switching_to_insert_mode() {
+            fn insert() {
                 let mut editor = Editor::new(Buffer::new(""));
 
                 editor.handle_keypress(KeyCode::Char('i'));
