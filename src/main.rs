@@ -104,8 +104,12 @@ impl Terminal {
         .unwrap();
     }
 
-    fn render_status_line(&self, mode: &EditorMode, _buffer: &Buffer, cursor: &Cursor) {
-        let left = format!(" {}", mode.to_string().to_uppercase(),);
+    fn render_status_line(&self, mode: &EditorMode, buffer: &Buffer, cursor: &Cursor) {
+        let left = format!(
+            " {} | {}",
+            mode.to_string().to_uppercase(),
+            buffer.path().unwrap_or("[No Name]")
+        );
         let right = format!("{}:{} ", cursor.row() + 1, cursor.col() + 1);
 
         let width = terminal::size().unwrap().0 as usize;
