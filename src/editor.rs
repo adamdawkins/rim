@@ -64,7 +64,7 @@ impl Editor {
             }
             KeyCode::Char('$') => {
                 self.cursor
-                    .move_to(self.cursor.row(), self.buffer.max_col(self.cursor.row()));
+                    .move_to_col(self.buffer.max_col(self.cursor.row()));
                 None
             }
             _ => None,
