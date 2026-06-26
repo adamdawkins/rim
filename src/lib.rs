@@ -96,6 +96,14 @@ impl Cursor {
         Cursor { row, col }
     }
 
+    pub fn row(&self) -> usize {
+        self.row
+    }
+
+    pub fn col(&self) -> usize {
+        self.col
+    }
+
     pub fn down(&mut self, buffer: &Buffer) {
         if self.row as usize >= buffer.max_row() {
             return;
@@ -142,14 +150,6 @@ impl Cursor {
     pub fn move_to(&mut self, row: usize, col: usize) {
         self.row = row;
         self.col = col;
-    }
-
-    pub fn row(&self) -> usize {
-        self.row
-    }
-
-    pub fn col(&self) -> usize {
-        self.col
     }
 }
 
