@@ -2,7 +2,7 @@ use std::io::stdout;
 
 use crate::{editor::EditorMode, Buffer, Cursor};
 
-use crossterm::{cursor, execute, style, terminal};
+use crossterm::{cursor, cursor::SetCursorStyle, execute, style, terminal};
 
 pub struct Terminal;
 
@@ -14,6 +14,8 @@ impl Terminal {
 
     pub fn render(&self, buffer: &Buffer, cursor: &Cursor, mode: &EditorMode) {
         self.clear_screen();
+
+        self.set_cursor_style(mode);
 
         for line in buffer.lines() {
             execute!(stdout(), style::Print(format!("{}\r\n", line))).unwrap();
@@ -29,6 +31,13 @@ impl Terminal {
             cursor::MoveTo(0, 0)
         )
         .unwrap();
+    }
+
+    fn set_cursor_style(&self, mode: &EditorMode) {
+        match mode {
+            EditorMode::Normal => execute!(stdout(), SetCursorStyle::SteadyBlock).unwrap(),
+            EditorMode::Insert => execute!(stdout(), SetCursorStyle::SteadyBar).unwrap(),
+        }
     }
 }
 
