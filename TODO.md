@@ -14,8 +14,8 @@
 - [x] [2026-06-25] Add boundary to `j`
 - [x] [2026-06-25] When moving up and down beyond end of line, cursor should move to the end of the line (in normal mode)
 - [x] [2026-06-26] Insert mode
+- [x] [2026-06-26] `$` jump to end of line
 - [ ] Append mode (`a`)
-- [ ] `$` jump to end of line
 - [ ] `0` jump to end of line
 - [ ] `^` jump to first character of line
 - [ ] `:w`
