@@ -18,7 +18,7 @@ use rim::{
 fn main() {
     let path = "foo.txt";
     let contents = fs::read_to_string(path).unwrap();
-    let buffer = Buffer::new(&contents);
+    let buffer = Buffer::with_path(&contents, Some(path.to_string()));
     let terminal = Terminal::new();
     let editor = Editor::new(buffer);
 
