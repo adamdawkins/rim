@@ -226,7 +226,7 @@ mod tests {
             use super::*;
 
             #[test]
-            fn test_editor_handles_return_to_normal_mode() {
+            fn esc() {
                 let mut editor = Editor::new(Buffer::new(""));
 
                 editor.handle_keypress(KeyCode::Char('i'));
