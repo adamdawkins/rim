@@ -55,6 +55,23 @@ impl Buffer {
 
         line.insert(col, c);
     }
+
+    pub fn remove_at_position(&mut self, row: u16, col: u16) {
+        let row = row as usize;
+        let col = col as usize;
+
+        if row >= self.lines.len() {
+            return;
+        }
+
+        let line = &mut self.lines[row];
+
+        if col >= line.len() {
+            return;
+        }
+
+        line.remove(col);
+    }
 }
 
 impl fmt::Display for Buffer {
@@ -175,6 +192,14 @@ bar";
         buffer.insert_at_position('x', 0, 1);
 
         assert_eq!(buffer.to_string(), "fxoo\nbar");
+    }
+
+    #[test]
+    fn test_remove_at_position_removes_char() {
+        let mut buffer = Buffer::new("foo\nbar");
+        buffer.remove_at_position(0, 1);
+
+        assert_eq!(buffer.to_string(), "fo\nbar");
     }
 }
 
