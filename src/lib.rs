@@ -103,6 +103,10 @@ impl Buffer {
         self.lines.insert(row + 1, new_line);
         self.modified = true;
     }
+
+    pub fn mark_clean(&mut self) {
+        self.modified = false;
+    }
 }
 
 impl fmt::Display for Buffer {
