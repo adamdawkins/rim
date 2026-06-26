@@ -133,9 +133,9 @@ impl Editor {
         // max_col is the index of the end of the last line,
         // we add one so that the cursor is placed at the end of the previous line after
         // joining
-        let previous_line_length = self.buffer.max_col((row - 1) as usize) + 1;
+        let previous_line_length = self.buffer.max_col(row - 1) + 1;
         self.buffer.join_lines(row);
-        self.cursor.move_to(row - 1, previous_line_length as u16);
+        self.cursor.move_to(row - 1, previous_line_length);
     }
 
     fn backspace_char(&mut self) {

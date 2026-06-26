@@ -21,7 +21,11 @@ impl Terminal {
             execute!(stdout(), style::Print(format!("{}\r\n", line))).unwrap();
         }
 
-        execute!(stdout(), cursor::MoveTo(cursor.col(), cursor.row())).unwrap();
+        execute!(
+            stdout(),
+            cursor::MoveTo(cursor.col() as u16, cursor.row() as u16)
+        )
+        .unwrap();
     }
 
     fn clear_screen(&self) {

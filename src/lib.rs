@@ -39,10 +39,7 @@ impl Buffer {
         &self.lines
     }
 
-    pub fn insert_at_position(&mut self, c: char, row: u16, col: u16) {
-        let row = row as usize;
-        let col = col as usize;
-
+    pub fn insert_at_position(&mut self, c: char, row: usize, col: usize) {
         if row >= self.lines.len() {
             return;
         }
@@ -56,10 +53,7 @@ impl Buffer {
         line.insert(col, c);
     }
 
-    pub fn remove_at_position(&mut self, row: u16, col: u16) {
-        let row = row as usize;
-        let col = col as usize;
-
+    pub fn remove_at_position(&mut self, row: usize, col: usize) {
         if row >= self.lines.len() {
             return;
         }
@@ -73,17 +67,12 @@ impl Buffer {
         line.remove(col);
     }
 
-    pub fn join_lines(&mut self, row: u16) {
-        let row = row as usize;
-
+    pub fn join_lines(&mut self, row: usize) {
         let content = self.lines.remove(row);
         self.lines[row - 1].push_str(&content);
     }
 
-    pub fn split_line(&mut self, row: u16, col: u16) {
-        let row = row as usize;
-        let col = col as usize;
-
+    pub fn split_line(&mut self, row: usize, col: usize) {
         let new_line = self.lines[row].split_off(col);
 
         self.lines.insert(row + 1, new_line);
@@ -98,12 +87,12 @@ impl fmt::Display for Buffer {
 
 #[derive(Default)]
 pub struct Cursor {
-    row: u16,
-    col: u16,
+    row: usize,
+    col: usize,
 }
 
 impl Cursor {
-    pub fn new(row: u16, col: u16) -> Self {
+    pub fn new(row: usize, col: usize) -> Self {
         Cursor { row, col }
     }
 
@@ -114,10 +103,10 @@ impl Cursor {
 
         self.row += 1;
 
-        let next_line_max_col = buffer.max_col(self.row as usize);
+        let next_line_max_col = buffer.max_col(self.row);
 
-        if self.col as usize >= next_line_max_col {
-            self.col = next_line_max_col as u16;
+        if self.col >= next_line_max_col {
+            self.col = next_line_max_col as usize;
         }
     }
 
@@ -128,10 +117,10 @@ impl Cursor {
 
         self.row -= 1;
 
-        let next_line_max_col = buffer.max_col(self.row as usize);
+        let next_line_max_col = buffer.max_col(self.row);
 
         if self.col as usize >= next_line_max_col {
-            self.col = next_line_max_col as u16;
+            self.col = next_line_max_col;
         }
     }
 
@@ -150,16 +139,16 @@ impl Cursor {
         self.col += 1;
     }
 
-    pub fn move_to(&mut self, row: u16, col: u16) {
+    pub fn move_to(&mut self, row: usize, col: usize) {
         self.row = row;
         self.col = col;
     }
 
-    pub fn row(&self) -> u16 {
+    pub fn row(&self) -> usize {
         self.row
     }
 
-    pub fn col(&self) -> u16 {
+    pub fn col(&self) -> usize {
         self.col
     }
 }
