@@ -55,6 +55,7 @@ impl Terminal {
         self.clear_screen();
         self.set_cursor_style(mode);
         self.render_buffer(buffer);
+        self.render_status_line(mode, cursor);
         self.move_cursor(cursor);
     }
 
@@ -85,6 +86,21 @@ impl Terminal {
         execute!(
             stdout(),
             cursor::MoveTo(cursor.col() as u16, cursor.row() as u16)
+        )
+        .unwrap();
+    }
+
+    fn render_status_line(&self, mode: &EditorMode, cursor: &Cursor) {
+        let status = format!(
+            "Mode: {:?} | Line: {} | Col: {}",
+            mode,
+            cursor.row() + 1,
+            cursor.col() + 1
+        );
+        execute!(
+            stdout(),
+            cursor::MoveTo(0, terminal::size().unwrap().1 - 1),
+            style::Print(status)
         )
         .unwrap();
     }
