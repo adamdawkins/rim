@@ -46,6 +46,17 @@ fn run(terminal: Terminal, mut editor: Editor) {
     }
 }
 
+fn to_key(code: KeyCode) -> Key {
+    match code {
+        KeyCode::Char(c) => Key::Char(c),
+        KeyCode::Backspace => Key::Backspace,
+        KeyCode::Enter => Key::Enter,
+        KeyCode::Esc => Key::Esc,
+        KeyCode::Tab => Key::Tab,
+        _ => Key::Other,
+    }
+}
+
 pub struct Terminal;
 
 impl Terminal {
@@ -118,16 +129,5 @@ impl Drop for Terminal {
     fn drop(&mut self) {
         self.clear_screen();
         terminal::disable_raw_mode().unwrap();
-    }
-}
-
-fn to_key(code: KeyCode) -> Key {
-    match code {
-        KeyCode::Char(c) => Key::Char(c),
-        KeyCode::Backspace => Key::Backspace,
-        KeyCode::Enter => Key::Enter,
-        KeyCode::Esc => Key::Esc,
-        KeyCode::Tab => Key::Tab,
-        _ => Key::Other,
     }
 }
