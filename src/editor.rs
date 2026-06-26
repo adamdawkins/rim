@@ -38,11 +38,14 @@ impl Editor {
 
     fn handle_normal_mode_keypress(&mut self, key: KeyCode) -> Option<EditorAction> {
         match key {
+            // Commands
             KeyCode::Char('q') => Some(EditorAction::Quit),
             KeyCode::Char('i') => {
                 self.mode = EditorMode::Insert;
                 None
             }
+
+            // Motions
             KeyCode::Char('h') => {
                 self.move_cursor_left();
                 None
