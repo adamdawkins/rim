@@ -56,9 +56,7 @@ impl Terminal {
 
         self.set_cursor_style(mode);
 
-        for line in buffer.lines() {
-            execute!(stdout(), style::Print(format!("{}\r\n", line))).unwrap();
-        }
+        self.render_buffer(buffer);
 
         execute!(
             stdout(),
@@ -80,6 +78,13 @@ impl Terminal {
         match mode {
             EditorMode::Normal => execute!(stdout(), SetCursorStyle::SteadyBlock).unwrap(),
             EditorMode::Insert => execute!(stdout(), SetCursorStyle::SteadyBar).unwrap(),
+        }
+    }
+
+    // rendering
+    fn render_buffer(&self, buffer: &Buffer) {
+        for line in buffer.lines() {
+            execute!(stdout(), style::Print(format!("{}\r\n", line))).unwrap();
         }
     }
 }
