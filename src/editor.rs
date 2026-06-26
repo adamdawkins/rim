@@ -73,6 +73,10 @@ impl Editor {
                 self.insert_char(c);
                 None
             }
+            KeyCode::Backspace => {
+                self.backspace();
+                None
+            }
             _ => None,
         }
     }
@@ -98,6 +102,17 @@ impl Editor {
             .insert_at_position(c, self.cursor.row(), self.cursor.col());
 
         self.cursor.right(&self.buffer);
+    }
+
+    fn backspace(&mut self) {
+        if self.cursor.col() == 0 {
+            return;
+        }
+
+        self.buffer
+            .remove_at_position(self.cursor.row(), self.cursor.col() - 1);
+
+        self.cursor.left();
     }
 }
 
@@ -182,7 +197,9 @@ mod insert_mode_key_tests {
     fn test_editor_inserts_normal_characters() {
         let mut editor = Editor::new(Buffer::new("Hello"));
 
+        // switch to insert mode
         editor.handle_keypress(KeyCode::Char('i'));
+
         editor.handle_keypress(KeyCode::Char('h'));
         editor.handle_keypress(KeyCode::Char('j'));
         editor.handle_keypress(KeyCode::Char('k'));
@@ -191,5 +208,35 @@ mod insert_mode_key_tests {
         editor.handle_keypress(KeyCode::Char('q'));
 
         assert_eq!(editor.buffer().to_string(), "hjkliqHello");
+    }
+
+    #[test]
+    fn test_editor_removes_character_at_backspace() {
+        let mut editor = Editor::new(Buffer::new("Seppuku"));
+
+        // move right
+        editor.handle_keypress(KeyCode::Char('l'));
+
+        // switch to insert mode
+        editor.handle_keypress(KeyCode::Char('i'));
+
+        editor.handle_keypress(KeyCode::Backspace);
+
+        assert_eq!(editor.buffer().to_string(), "eppuku");
+    }
+
+    #[test]
+    fn test_cursor_moves_back_after_backspace() {
+        let mut editor = Editor::new(Buffer::new("Seppuku"));
+
+        // move right
+        editor.handle_keypress(KeyCode::Char('l'));
+
+        // switch to insert mode
+        editor.handle_keypress(KeyCode::Char('i'));
+
+        editor.handle_keypress(KeyCode::Backspace);
+
+        assert_eq!(editor.cursor().col(), 0);
     }
 }
