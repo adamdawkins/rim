@@ -41,6 +41,7 @@ impl Editor {
     fn handle_normal_mode_keypress(&mut self, key: KeyCode) -> Option<EditorAction> {
         match key {
             // Commands
+            KeyCode::Char('w') => Some(EditorAction::Write),
             KeyCode::Char('q') => Some(EditorAction::Quit),
             KeyCode::Char('i') => {
                 self.mode = EditorMode::Insert;
@@ -191,6 +192,7 @@ pub enum EditorMode {
 #[derive(Debug, PartialEq)]
 pub enum EditorAction {
     Quit,
+    Write,
 }
 
 #[cfg(test)]
@@ -270,6 +272,15 @@ mod tests {
                 let action = editor.handle_keypress(KeyCode::Char('q'));
 
                 assert_eq!(action, Some(EditorAction::Quit));
+            }
+
+            #[test]
+            fn write() {
+                let mut editor = Editor::new(Buffer::new(""));
+
+                let action = editor.handle_keypress(KeyCode::Char('w'));
+
+                assert_eq!(action, Some(EditorAction::Write));
             }
 
             #[test]
