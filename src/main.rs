@@ -5,7 +5,9 @@ use crossterm::{
     cursor,
     cursor::SetCursorStyle,
     event::{read, Event, KeyCode},
-    execute, style, terminal,
+    execute,
+    style::{Color, Print, ResetColor, SetBackgroundColor, SetForegroundColor},
+    terminal,
 };
 
 use rim::{
@@ -78,7 +80,7 @@ impl Terminal {
     // rendering
     fn render_buffer(&self, buffer: &Buffer) {
         for line in buffer.lines() {
-            execute!(stdout(), style::Print(format!("{}\r\n", line))).unwrap();
+            execute!(stdout(), Print(format!("{}\r\n", line))).unwrap();
         }
     }
 
@@ -97,10 +99,20 @@ impl Terminal {
             cursor.row() + 1,
             cursor.col() + 1
         );
+
+        let print_status = format!(
+            "{:<width$}",
+            status,
+            width = terminal::size().unwrap().0 as usize
+        );
+
         execute!(
             stdout(),
+            SetBackgroundColor(Color::Yellow),
+            SetForegroundColor(Color::Black),
             cursor::MoveTo(0, terminal::size().unwrap().1 - 1),
-            style::Print(status)
+            Print(print_status),
+            ResetColor
         )
         .unwrap();
     }
