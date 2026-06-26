@@ -79,6 +79,15 @@ impl Buffer {
         let content = self.lines.remove(row);
         self.lines[row - 1].push_str(&content);
     }
+
+    pub fn split_line(&mut self, row: u16, col: u16) {
+        let row = row as usize;
+        let col = col as usize;
+
+        let new_line = self.lines[row].split_off(col);
+
+        self.lines.insert(row + 1, new_line);
+    }
 }
 
 impl fmt::Display for Buffer {
@@ -220,6 +229,14 @@ bar";
         buffer.join_lines(1);
 
         assert_eq!(buffer.to_string(), "foobar");
+    }
+
+    #[test]
+    fn test_split_line() {
+        let mut buffer = Buffer::new("foo\nbar");
+        buffer.split_line(1, 1);
+
+        assert_eq!(buffer.to_string(), "foo\nb\nar");
     }
 }
 
