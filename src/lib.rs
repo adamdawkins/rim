@@ -39,6 +39,13 @@ impl Buffer {
         &self.lines
     }
 
+    pub fn first_non_whitespace_col(&self, row: usize) -> usize {
+        self.lines[row]
+            .chars()
+            .position(|c| !c.is_whitespace())
+            .unwrap_or(0)
+    }
+
     pub fn insert_at_position(&mut self, c: char, row: usize, col: usize) {
         if row >= self.lines.len() {
             return;
@@ -192,6 +199,14 @@ threethline";
     fn max_col_of_empty_line() {
         let buffer = Buffer::new("");
         assert_eq!(buffer.max_col(0), 0);
+    }
+
+    #[test]
+    fn first_non_whitespace_col() {
+        let contents = "    4ello";
+        let buffer = Buffer::new(contents);
+
+        assert_eq!(buffer.first_non_whitespace_col(0), 4);
     }
 
     #[test]
