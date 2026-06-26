@@ -62,6 +62,11 @@ impl Editor {
                 self.move_cursor_right();
                 None
             }
+            KeyCode::Char('$') => {
+                self.cursor
+                    .move_to(self.cursor.row(), self.buffer.max_col(self.cursor.row()));
+                None
+            }
             _ => None,
         }
     }
@@ -197,6 +202,13 @@ mod tests {
                 let mut editor = Editor::new(Buffer::new("hello\nworld"));
                 editor.handle_keypress(KeyCode::Char('l'));
                 assert_eq!(editor.cursor().col(), 1);
+            }
+
+            #[test]
+            fn jump_to_eol() {
+                let mut editor = Editor::new(Buffer::new("012345"));
+                editor.handle_keypress(KeyCode::Char('$'));
+                assert_eq!(editor.cursor().col(), 5);
             }
         }
 
