@@ -50,6 +50,10 @@ impl Buffer {
         self.path.as_deref()
     }
 
+    pub fn is_modified(&self) -> bool {
+        self.modified
+    }
+
     pub fn first_non_whitespace_col(&self, row: usize) -> usize {
         self.lines[row]
             .chars()
