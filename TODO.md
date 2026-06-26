@@ -1,29 +1,34 @@
 # Vim-esque text editor
 
-- [x] [2026-06-25] render the contents of a file
-- [x] [2026-06-25] Improve output of file contents like text editor (clear new lines etc)
-- [x] [2026-06-25] Render a cursor
-- [x] [2026-06-25] cursor movement
-- [x] [2026-06-25] `j`
-- [x] [2026-06-25] `k`
-- [x] [2026-06-25] `h`
-- [x] [2026-06-25] `l`
-- [x] [2026-06-25] Add boundary to `h`
-- [x] [2026-06-25] Add boundary to `k`
-- [x] [2026-06-25] Add boundary to `l`
-- [x] [2026-06-25] Add boundary to `j`
-- [x] [2026-06-25] When moving up and down beyond end of line, cursor should move to the end of the line (in normal mode)
-- [x] [2026-06-26] Insert mode
-- [x] [2026-06-26] `$` jump to end of line
 - [ ] Append mode (`a`)
-- [ ] `0` jump to end of line
-- [ ] `^` jump to first character of line
-- [ ] `:w`
-- [ ] `:q`
+- [ ] Delete line?
+- [ ] Other motion commands?
+- [ ] Status Line: Filename
+- [ ] Status Line: Modified indicator
+- [ ] Visual mode
+- [ ] Write a brand new file
 - [ ] `:e`
 - [ ] `:wq`
-- [ ] Write a brand new file
-- [ ] Visual mode
-- [ ] Other motion commands?
-- [ ] Delete line?
 - [ ] open with file from command line (`rim file.txt`)
+- [] Command mode
+- [x] [2026-06-25] Add boundary to `h`
+- [x] [2026-06-25] Add boundary to `j`
+- [x] [2026-06-25] Add boundary to `k`
+- [x] [2026-06-25] Add boundary to `l`
+- [x] [2026-06-25] Improve output of file contents like text editor (clear new lines etc)
+- [x] [2026-06-25] Render a cursor
+- [x] [2026-06-25] When moving up and down beyond end of line, cursor should move to the end of the line (in normal mode)
+- [x] [2026-06-25] `h`
+- [x] [2026-06-25] `j`
+- [x] [2026-06-25] `k`
+- [x] [2026-06-25] `l`
+- [x] [2026-06-25] `q`
+- [x] [2026-06-25] cursor movement
+- [x] [2026-06-25] render the contents of a file
+- [x] [2026-06-26] Insert mode
+- [x] [2026-06-26] Status Line: Cursor
+- [x] [2026-06-26] Status Line: Mode
+- [x] [2026-06-26] `$` jump to end of line
+- [x] [2026-06-26] `0` jump to end of line
+- [x] [2026-06-26] `^` jump to first character of line
+- [x] [2026-06-26] `w`
