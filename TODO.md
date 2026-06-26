@@ -13,7 +13,7 @@
 - [x] [2026-06-25] Add boundary to `l`
 - [x] [2026-06-25] Add boundary to `j`
 - [x] [2026-06-25] When moving up and down beyond end of line, cursor should move to the end of the line (in normal mode)
-- [ ] Insert mode
+- [x] [2026-06-26] Insert mode
 - [ ] `:w`
 - [ ] `:q`
 - [ ] `:e`
