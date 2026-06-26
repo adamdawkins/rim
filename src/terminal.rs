@@ -1,6 +1,6 @@
 use std::io::stdout;
 
-use crate::{Buffer, Cursor};
+use crate::{editor::EditorMode, Buffer, Cursor};
 
 use crossterm::{cursor, execute, style, terminal};
 
@@ -12,7 +12,7 @@ impl Terminal {
         Terminal
     }
 
-    pub fn render(&self, buffer: &Buffer, cursor: &Cursor) {
+    pub fn render(&self, buffer: &Buffer, cursor: &Cursor, mode: &EditorMode) {
         self.clear_screen();
 
         for line in buffer.lines() {

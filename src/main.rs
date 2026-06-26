@@ -14,7 +14,7 @@ fn main() {
 }
 
 fn run(terminal: Terminal, mut editor: Editor) {
-    terminal.render(editor.buffer(), editor.cursor());
+    terminal.render(editor.buffer(), editor.cursor(), editor.mode());
 
     loop {
         match read().unwrap() {
@@ -26,6 +26,6 @@ fn run(terminal: Terminal, mut editor: Editor) {
             _ => {}
         }
 
-        terminal.render(editor.buffer(), editor.cursor());
+        terminal.render(editor.buffer(), editor.cursor(), editor.mode());
     }
 }
