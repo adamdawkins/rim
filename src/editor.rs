@@ -167,7 +167,7 @@ mod tests {
             use super::*;
 
             #[test]
-            fn test_editor_handles_left() {
+            fn left() {
                 let mut editor = Editor::new(Buffer::new("hello\nworld"));
                 editor.handle_keypress(KeyCode::Char('l'));
                 editor.handle_keypress(KeyCode::Char('h'));
@@ -175,14 +175,14 @@ mod tests {
             }
 
             #[test]
-            fn test_editor_handles_down() {
+            fn down() {
                 let mut editor = Editor::new(Buffer::new("line0\nline1\nline2"));
                 editor.handle_keypress(KeyCode::Char('j'));
                 assert_eq!(editor.cursor().row(), 1);
             }
 
             #[test]
-            fn test_editor_handles_up() {
+            fn up() {
                 let mut editor = Editor::new(Buffer::new("line0\nline1\nline2"));
                 editor.handle_keypress(KeyCode::Char('j'));
                 editor.handle_keypress(KeyCode::Char('k'));
@@ -190,7 +190,7 @@ mod tests {
             }
 
             #[test]
-            fn test_editor_handles_right() {
+            fn right() {
                 let mut editor = Editor::new(Buffer::new("hello\nworld"));
                 editor.handle_keypress(KeyCode::Char('l'));
                 assert_eq!(editor.cursor().col(), 1);
