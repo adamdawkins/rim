@@ -282,6 +282,7 @@ mod insert_mode_key_tests {
 
         editor.handle_keypress(KeyCode::Backspace);
 
+        assert_eq!(editor.buffer().to_string(), "01234World");
         assert_eq!(editor.cursor().row(), 0);
         assert_eq!(editor.cursor().col(), 5);
     }
