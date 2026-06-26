@@ -1,10 +1,8 @@
 use std::fmt;
 
 pub mod editor;
-pub mod terminal;
 
 pub use editor::Editor;
-pub use terminal::Terminal;
 
 pub struct Buffer {
     lines: Vec<String>,
