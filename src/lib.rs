@@ -38,6 +38,10 @@ impl Buffer {
         &self.lines
     }
 
+    pub fn path(&self) -> Option<&str> {
+        self.path.as_deref()
+    }
+
     pub fn first_non_whitespace_col(&self, row: usize) -> usize {
         self.lines[row]
             .chars()
