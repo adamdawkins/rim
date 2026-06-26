@@ -73,6 +73,7 @@ impl Buffer {
         }
 
         line.insert(col, c);
+        self.modified = true;
     }
 
     pub fn remove_at_position(&mut self, row: usize, col: usize) {
@@ -87,17 +88,20 @@ impl Buffer {
         }
 
         line.remove(col);
+        self.modified = true;
     }
 
     pub fn join_lines(&mut self, row: usize) {
         let content = self.lines.remove(row);
         self.lines[row - 1].push_str(&content);
+        self.modified = true;
     }
 
     pub fn split_line(&mut self, row: usize, col: usize) {
         let new_line = self.lines[row].split_off(col);
 
         self.lines.insert(row + 1, new_line);
+        self.modified = true;
     }
 }
 
@@ -240,6 +244,7 @@ bar";
         buffer.insert_at_position('x', 0, 1);
 
         assert_eq!(buffer.to_string(), "fxoo\nbar");
+        assert!(buffer.is_modified());
     }
 
     #[test]
@@ -248,6 +253,7 @@ bar";
         buffer.remove_at_position(0, 1);
 
         assert_eq!(buffer.to_string(), "fo\nbar");
+        assert!(buffer.is_modified());
     }
 
     #[test]
@@ -256,6 +262,7 @@ bar";
         buffer.join_lines(1);
 
         assert_eq!(buffer.to_string(), "foobar");
+        assert!(buffer.is_modified());
     }
 
     #[test]
@@ -264,6 +271,7 @@ bar";
         buffer.split_line(1, 1);
 
         assert_eq!(buffer.to_string(), "foo\nb\nar");
+        assert!(buffer.is_modified());
     }
 }
 
