@@ -62,6 +62,10 @@ impl Editor {
                 self.move_cursor_right();
                 None
             }
+            KeyCode::Char('0') => {
+                self.move_cursor_to_start_of_line(self.cursor.row());
+                None
+            }
             KeyCode::Char('$') => {
                 self.move_cursor_to_end_of_line(self.cursor.row());
                 None
@@ -217,6 +221,16 @@ mod tests {
                 let mut editor = Editor::new(Buffer::new("012345"));
                 editor.handle_keypress(KeyCode::Char('$'));
                 assert_eq!(editor.cursor().col(), 5);
+            }
+
+            #[test]
+            fn jump_to_start_of_line() {
+                let mut editor = Editor::new(Buffer::new("012345"));
+
+                editor.handle_keypress(KeyCode::Char('$'));
+                editor.handle_keypress(KeyCode::Char('0'));
+
+                assert_eq!(editor.cursor().col(), 0);
             }
         }
 
