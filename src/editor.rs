@@ -113,6 +113,10 @@ impl Editor {
         self.cursor.move_to_col(col);
     }
 
+    fn move_cursor_to_start_of_line(&mut self, row: usize) {
+        self.cursor.move_to(row, 0);
+    }
+
     fn insert_char(&mut self, c: char) {
         self.buffer
             .insert_at_position(c, self.cursor.row(), self.cursor.col());
@@ -125,7 +129,7 @@ impl Editor {
         let col = self.cursor.col();
 
         self.buffer.split_line(row, col);
-        self.cursor.move_to(row + 1, 0);
+        self.move_cursor_to_start_of_line(row + 1);
     }
 
     fn backspace(&mut self) {
