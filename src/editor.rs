@@ -66,6 +66,10 @@ impl Editor {
                 self.move_cursor_to_start_of_line(self.cursor.row());
                 None
             }
+            KeyCode::Char('^') => {
+                self.move_cursor_to_first_non_whitespace_char(self.cursor.row());
+                None
+            }
             KeyCode::Char('$') => {
                 self.move_cursor_to_end_of_line(self.cursor.row());
                 None
@@ -119,6 +123,11 @@ impl Editor {
 
     fn move_cursor_to_start_of_line(&mut self, row: usize) {
         self.cursor.move_to(row, 0);
+    }
+
+    fn move_cursor_to_first_non_whitespace_char(&mut self, row: usize) {
+        let col = self.buffer.first_non_whitespace_col(row);
+        self.cursor.move_to(row, col);
     }
 
     fn insert_char(&mut self, c: char) {
@@ -231,6 +240,15 @@ mod tests {
                 editor.handle_keypress(KeyCode::Char('0'));
 
                 assert_eq!(editor.cursor().col(), 0);
+            }
+
+            #[test]
+            fn jump_to_first_non_blank_char() {
+                let mut editor = Editor::new(Buffer::new("    012345"));
+
+                editor.handle_keypress(KeyCode::Char('^'));
+
+                assert_eq!(editor.cursor().col(), 4);
             }
         }
 
