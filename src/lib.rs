@@ -6,6 +6,7 @@ pub use editor::Editor;
 pub struct Buffer {
     lines: Vec<String>,
     path: Option<String>,
+    modified: bool,
 }
 
 impl Buffer {
@@ -16,7 +17,11 @@ impl Buffer {
     pub fn with_path(content: &str, path: Option<String>) -> Self {
         let lines = content.lines().map(|line| line.to_string()).collect();
 
-        Buffer { lines, path }
+        Buffer {
+            lines,
+            path,
+            modified: false,
+        }
     }
 
     pub fn max_row(&self) -> usize {
