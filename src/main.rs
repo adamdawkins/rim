@@ -58,7 +58,7 @@ impl Terminal {
         self.clear_screen();
         self.set_cursor_style(mode);
         self.render_buffer(buffer);
-        self.render_status_line(mode, cursor);
+        self.render_status_line(mode, buffer, cursor);
         self.move_cursor(cursor);
     }
 
@@ -93,7 +93,7 @@ impl Terminal {
         .unwrap();
     }
 
-    fn render_status_line(&self, mode: &EditorMode, cursor: &Cursor) {
+    fn render_status_line(&self, mode: &EditorMode, _buffer: &Buffer, cursor: &Cursor) {
         let left = format!(" {}", mode.to_string().to_uppercase(),);
         let right = format!("{}:{} ", cursor.row() + 1, cursor.col() + 1);
 
