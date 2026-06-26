@@ -105,14 +105,23 @@ impl Editor {
     }
 
     fn backspace(&mut self) {
-        if self.cursor.col() == 0 {
-            return;
+        match (self.cursor.row(), self.cursor.col()) {
+            (0, 0) => return, // At the start of the file, do nothing
+            (row, 0) => {
+                // max_col is the index of the end of the last line,
+                // we add one so that the cursor is placed at the end of the previous line after
+                // joining
+                let previous_line_length = self.buffer.max_col((row - 1) as usize) + 1;
+                self.buffer.join_lines(row);
+                self.cursor.move_to(row - 1, previous_line_length as u16);
+            }
+            _ => {
+                self.buffer
+                    .remove_at_position(self.cursor.row(), self.cursor.col() - 1);
+
+                self.cursor.left();
+            }
         }
-
-        self.buffer
-            .remove_at_position(self.cursor.row(), self.cursor.col() - 1);
-
-        self.cursor.left();
     }
 }
 
@@ -251,5 +260,21 @@ mod insert_mode_key_tests {
         assert_eq!(editor.buffer().to_string(), "Hello\nWorld");
         assert_eq!(editor.cursor().row(), 0);
         assert_eq!(editor.cursor().col(), 0);
+    }
+
+    #[test]
+    fn test_backspace_at_start_of_line_joins_lines() {
+        let mut editor = Editor::new(Buffer::new("01234\nWorld"));
+
+        // move down
+        editor.handle_keypress(KeyCode::Char('j'));
+
+        // switch to insert mode
+        editor.handle_keypress(KeyCode::Char('i'));
+
+        editor.handle_keypress(KeyCode::Backspace);
+
+        assert_eq!(editor.cursor().row(), 0);
+        assert_eq!(editor.cursor().col(), 5);
     }
 }
