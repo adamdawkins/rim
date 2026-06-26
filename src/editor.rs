@@ -63,8 +63,7 @@ impl Editor {
                 None
             }
             KeyCode::Char('$') => {
-                self.cursor
-                    .move_to_col(self.buffer.max_col(self.cursor.row()));
+                self.move_cursor_to_eol(self.cursor.row());
                 None
             }
             _ => None,
@@ -107,6 +106,11 @@ impl Editor {
 
     fn move_cursor_right(&mut self) {
         self.cursor.right(&self.buffer);
+    }
+
+    fn move_cursor_to_eol(&mut self, row: usize) {
+        let col = self.buffer.max_col(row);
+        self.cursor.move_to_col(col);
     }
 
     fn insert_char(&mut self, c: char) {
