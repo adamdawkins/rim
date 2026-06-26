@@ -35,7 +35,9 @@ fn run(terminal: Terminal, mut editor: Editor) {
                     break;
                 }
                 Some(EditorAction::Write) => {
-                    fs::write("foo.txt", editor.buffer().to_string()).unwrap();
+                    if (fs::write("foo.txt", editor.buffer().to_string()).is_ok()) {
+                        editor.written();
+                    }
                 }
                 _ => {}
             },
