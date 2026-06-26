@@ -106,15 +106,12 @@ impl Editor {
 
     fn backspace(&mut self) {
         match (self.cursor.row(), self.cursor.col()) {
-            (0, 0) => return, // At the start of the file, do nothing
+            (0, 0) => return,
             (row, 0) => {
                 self.backspace_at_start_of_line();
             }
             _ => {
-                self.buffer
-                    .remove_at_position(self.cursor.row(), self.cursor.col() - 1);
-
-                self.cursor.left();
+                self.backspace_char();
             }
         }
     }
@@ -127,6 +124,12 @@ impl Editor {
         let previous_line_length = self.buffer.max_col((row - 1) as usize) + 1;
         self.buffer.join_lines(row);
         self.cursor.move_to(row - 1, previous_line_length as u16);
+    }
+
+    fn backspace_char(&mut self) {
+        self.buffer
+            .remove_at_position(self.cursor.row(), self.cursor.col() - 1);
+        self.cursor.left();
     }
 }
 
