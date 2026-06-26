@@ -240,7 +240,7 @@ mod tests {
             use super::*;
 
             #[test]
-            fn test_editor_inserts_normal_characters() {
+            fn chars() {
                 let mut editor = Editor::new(Buffer::new("Hello"));
 
                 // switch to insert mode
