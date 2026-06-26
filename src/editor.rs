@@ -107,7 +107,7 @@ impl Editor {
     fn backspace(&mut self) {
         match (self.cursor.row(), self.cursor.col()) {
             (0, 0) => return,
-            (row, 0) => {
+            (_, 0) => {
                 self.backspace_at_start_of_line();
             }
             _ => {
