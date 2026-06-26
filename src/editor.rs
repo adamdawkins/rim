@@ -215,7 +215,7 @@ mod tests {
         }
     }
 
-    mod insert_mode_key_tests {
+    mod insert_mode {
         use super::*;
 
         #[test]
