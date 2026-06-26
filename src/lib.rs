@@ -234,7 +234,7 @@ mod cursor_tests {
     use super::*;
 
     #[test]
-    fn test_cursor_left_goes_left() {
+    fn left() {
         let mut cursor = Cursor::new(1, 10);
 
         cursor.left();
@@ -243,7 +243,7 @@ mod cursor_tests {
     }
 
     #[test]
-    fn test_cursor_cannot_go_left_from_first_column() {
+    fn left_from_first_column() {
         let mut cursor = Cursor::new(1, 0);
 
         cursor.left();
@@ -253,7 +253,7 @@ mod cursor_tests {
     }
 
     #[test]
-    fn test_cursor_goes_up() {
+    fn up() {
         let buffer = Buffer::new("000\n111\n2");
         let mut cursor = Cursor::new(1, 2);
 
@@ -264,7 +264,7 @@ mod cursor_tests {
     }
 
     #[test]
-    fn test_cursor_cannot_go_up_from_first_row() {
+    fn up_from_first_row() {
         let buffer = Buffer::new("000\n111\n2");
         let mut cursor = Cursor::new(0, 2);
 
@@ -275,7 +275,7 @@ mod cursor_tests {
     }
 
     #[test]
-    fn test_cursor_goes_up_to_last_col_of_shorter_line() {
+    fn up_to_last_col_of_shorter_line() {
         let contents = "\
 goes here ^
 cursor here ^";
@@ -290,7 +290,7 @@ cursor here ^";
     }
 
     #[test]
-    fn test_cursor_goes_down() {
+    fn down() {
         let buffer = Buffer::new("0\n1\n2");
         let mut cursor = Cursor::new(1, 0);
 
@@ -301,7 +301,7 @@ cursor here ^";
     }
 
     #[test]
-    fn test_cursor_cannot_go_down_from_last_row() {
+    fn down_from_last_row() {
         let buffer = Buffer::new("0\n1\n2");
 
         let mut cursor = Cursor::new(2, 0);
@@ -313,7 +313,7 @@ cursor here ^";
     }
 
     #[test]
-    fn test_cursor_goes_down_to_last_col_of_shorter_line() {
+    fn down_to_last_col_of_shorter_line() {
         let contents = "\
 cursor here ^
 goes here ^";
@@ -328,7 +328,7 @@ goes here ^";
     }
 
     #[test]
-    fn test_cursor_goes_right() {
+    fn right() {
         let buffer = Buffer::new("0\n11\n2");
         let mut cursor = Cursor::new(1, 0);
 
@@ -339,7 +339,7 @@ goes here ^";
     }
 
     #[test]
-    fn test_cursor_cannot_go_right_from_end_of_line() {
+    fn right_from_end_of_line() {
         let buffer = Buffer::new("0\n1\n2");
         let mut cursor = Cursor::new(0, 0);
 
