@@ -158,7 +158,7 @@ mod buffer_tests {
     use super::*;
 
     #[test]
-    fn test_buffer_max_row() {
+    fn max_row() {
         let contents = "\
 zeroth line
 oneth line
@@ -169,7 +169,7 @@ threethline";
     }
 
     #[test]
-    fn test_buffer_max_col() {
+    fn max_col() {
         let contents = "\
 this line has 24 columns
 oneth line
@@ -181,13 +181,13 @@ threethline";
     }
 
     #[test]
-    fn test_buffer_max_col_of_empty_line() {
+    fn max_col_of_empty_line() {
         let buffer = Buffer::new("");
         assert_eq!(buffer.max_col(0), 0);
     }
 
     #[test]
-    fn test_buffer_to_string_returns_correct_string() {
+    fn to_string() {
         let contents = "\
 foo
 bar";
@@ -197,7 +197,7 @@ bar";
     }
 
     #[test]
-    fn test_insert_at_position_inserts_char() {
+    fn insert_at_position() {
         let mut buffer = Buffer::new("foo\nbar");
         buffer.insert_at_position('x', 0, 1);
 
@@ -205,7 +205,7 @@ bar";
     }
 
     #[test]
-    fn test_remove_at_position_removes_char() {
+    fn remove_at_position() {
         let mut buffer = Buffer::new("foo\nbar");
         buffer.remove_at_position(0, 1);
 
@@ -213,7 +213,7 @@ bar";
     }
 
     #[test]
-    fn test_join_lines() {
+    fn join_lines() {
         let mut buffer = Buffer::new("foo\nbar");
         buffer.join_lines(1);
 
@@ -221,7 +221,7 @@ bar";
     }
 
     #[test]
-    fn test_split_line() {
+    fn split_line() {
         let mut buffer = Buffer::new("foo\nbar");
         buffer.split_line(1, 1);
 
