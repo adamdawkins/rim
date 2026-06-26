@@ -2,6 +2,8 @@ use crate::{Buffer, Cursor};
 
 use crossterm::event::KeyCode;
 
+const TAB_WIDTH: usize = 2;
+
 pub struct Editor {
     buffer: Buffer,
     cursor: Cursor,
@@ -93,8 +95,9 @@ impl Editor {
                 None
             }
             KeyCode::Tab => {
-                self.insert_char(' ');
-                self.insert_char(' ');
+                for _ in 0..TAB_WIDTH {
+                    self.insert_char(' ');
+                }
                 None
             }
             KeyCode::Char(c) => {
@@ -401,18 +404,14 @@ mod tests {
             }
 
             #[test]
-            // insert two spaces
             fn tab() {
                 let mut editor = Editor::new(Buffer::new("Hello World"));
 
                 editor.handle_keypress(KeyCode::Char('l'));
-
-                // switch to insert mode
                 editor.handle_keypress(KeyCode::Char('i'));
-
-                // insert a tab character (two spaces)
                 editor.handle_keypress(KeyCode::Tab);
 
+                // TAB_WIDTH currently is 2, so we expect two spaces to be inserted
                 assert_eq!(editor.buffer().to_string(), "H  ello World");
                 assert_eq!(editor.cursor().row(), 0);
                 assert_eq!(editor.cursor().col(), 3);
