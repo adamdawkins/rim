@@ -31,6 +31,10 @@ impl Editor {
         &self.mode
     }
 
+    pub fn written(&mut self) {
+        self.buffer.mark_clean();
+    }
+
     pub fn handle_keypress(&mut self, key: Key) -> Option<EditorAction> {
         match self.mode {
             EditorMode::Normal => self.handle_normal_mode_keypress(key),
@@ -317,6 +321,22 @@ mod tests {
 
     mod insert_mode {
         use super::*;
+
+        mod io {
+            use super::*;
+
+            #[test]
+            fn written() {
+                let mut editor = Editor::new(Buffer::new("Hello"));
+
+                editor.handle_keypress(Key::Char('i'));
+                editor.handle_keypress(Key::Char('h'));
+                assert!(editor.buffer().is_modified());
+
+                editor.written();
+                assert!(!editor.buffer().is_modified());
+            }
+        }
 
         mod commands {
             use super::*;
