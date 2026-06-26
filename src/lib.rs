@@ -10,9 +10,13 @@ pub struct Buffer {
 
 impl Buffer {
     pub fn new(content: &str) -> Self {
+        Self::with_path(content, None)
+    }
+
+    pub fn with_path(content: &str, path: Option<String>) -> Self {
         let lines = content.lines().map(|line| line.to_string()).collect();
 
-        Buffer { lines, path: None }
+        Buffer { lines, path }
     }
 
     pub fn max_row(&self) -> usize {
