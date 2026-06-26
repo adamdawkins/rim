@@ -151,6 +151,10 @@ impl Cursor {
         self.row = row;
         self.col = col;
     }
+
+    pub fn move_to_row(&mut self, row: usize) {
+        self.row = row;
+    }
 }
 
 #[cfg(test)]
