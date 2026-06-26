@@ -239,4 +239,17 @@ mod insert_mode_key_tests {
 
         assert_eq!(editor.cursor().col(), 0);
     }
+
+    #[test]
+    fn test_backspace_at_start_of_file_does_nothing() {
+        let mut editor = Editor::new(Buffer::new("Hello\nWorld"));
+
+        // switch to insert mode
+        editor.handle_keypress(KeyCode::Char('i'));
+
+        editor.handle_keypress(KeyCode::Backspace);
+        assert_eq!(editor.buffer().to_string(), "Hello\nWorld");
+        assert_eq!(editor.cursor().row(), 0);
+        assert_eq!(editor.cursor().col(), 0);
+    }
 }
