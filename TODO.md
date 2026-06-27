@@ -4,7 +4,12 @@
 - [x] [2026-06-27] > Enter command mode with `:`
 - [x] [2026-06-27] > Exit command mode with `Esc`
 - [x] [2026-06-27] > render a `:` on command line when in command mode
-- [ ] > move cursor to command line when in command mode
+- [x] [2026-06-27] > move cursor to command line when in command mode
+- [ ] > Capture command strings
+- [ ] > Display command strings
+- [ ] > Execute command on Enter
+- [ ] > Clear previous command on esc or enter
+- [ ] > Render an error if the command is unknown
 - [ ] Move Normal `w` to `:w`
 - [ ] Move Normal `q` to `:q`
 - [ ] `:wq`
