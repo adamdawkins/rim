@@ -102,6 +102,10 @@ impl Editor {
                 self.mode = EditorMode::Normal;
                 None
             }
+            Key::Enter => {
+                self.pending_command = None;
+                None
+            }
             Key::Char(c) => {
                 self.pending_command.get_or_insert_with(String::new).push(c);
                 None
@@ -400,6 +404,18 @@ mod tests {
                 editor.handle_keypress(Key::Char('w'));
 
                 assert_eq!(editor.pending_command(), Some("w"));
+            }
+
+            #[test]
+            fn enter_clears_pending() {
+                let mut editor = Editor::new(Buffer::new(""));
+
+                editor.handle_keypress(Key::Char(':'));
+                editor.handle_keypress(Key::Char('w'));
+
+                editor.handle_keypress(Key::Enter);
+
+                assert_eq!(editor.pending_command(), None);
             }
         }
     }
