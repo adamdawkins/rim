@@ -305,7 +305,7 @@ mod tests {
             }
         }
 
-        mod commands {
+        mod actions {
             use super::*;
 
             #[test]
@@ -325,6 +325,10 @@ mod tests {
 
                 assert_eq!(action, Some(EditorAction::Write));
             }
+        }
+
+        mod switches {
+            use super::*;
 
             #[test]
             fn insert() {
