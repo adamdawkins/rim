@@ -82,13 +82,13 @@ impl Terminal {
         buffer: &Buffer,
         cursor: &Cursor,
         mode: &EditorMode,
-        _pending_command: Option<&str>,
+        pending_command: Option<&str>,
     ) {
         self.clear_screen();
         self.set_cursor_style(mode);
         self.render_buffer(buffer);
         self.render_status_line(mode, buffer, cursor);
-        self.render_command_line(mode, buffer);
+        self.render_command_line(mode, buffer, pending_command);
         self.render_cursor(mode, cursor);
     }
 
@@ -154,7 +154,12 @@ impl Terminal {
         .unwrap();
     }
 
-    fn render_command_line(&self, mode: &EditorMode, _buffer: &Buffer) {
+    fn render_command_line(
+        &self,
+        mode: &EditorMode,
+        _buffer: &Buffer,
+        _pending_command: Option<&str>,
+    ) {
         let line = format!(
             "{}",
             if mode == &EditorMode::Command {
