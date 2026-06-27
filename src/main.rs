@@ -72,6 +72,7 @@ impl Terminal {
         self.set_cursor_style(mode);
         self.render_buffer(buffer);
         self.render_status_line(mode, buffer, cursor);
+        self.render_command_line(mode, buffer, cursor);
         self.move_cursor(cursor);
     }
 
@@ -128,6 +129,15 @@ impl Terminal {
             cursor::MoveTo(0, terminal::size().unwrap().1 - 1),
             Print(status),
             ResetColor
+        )
+        .unwrap();
+    }
+
+    fn render_command_line(&self, _mode: &EditorMode, _buffer: &Buffer, _cursor: &Cursor) {
+        execute!(
+            stdout(),
+            cursor::MoveTo(0, terminal::size().unwrap().1),
+            Print("")
         )
         .unwrap();
     }
