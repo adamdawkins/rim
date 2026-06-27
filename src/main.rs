@@ -100,10 +100,10 @@ impl Terminal {
         }
     }
 
-    fn render_cursor(&self, _mode: &EditorMode, cursor: &Cursor) {
+    fn render_cursor(&self, _mode: &EditorMode, buffer_cursor: &Cursor) {
         execute!(
             stdout(),
-            cursor::MoveTo(cursor.col() as u16, cursor.row() as u16)
+            cursor::MoveTo(buffer_cursor.col() as u16, buffer_cursor.row() as u16)
         )
         .unwrap();
     }
