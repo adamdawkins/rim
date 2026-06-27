@@ -104,6 +104,7 @@ impl Editor {
             }
             Key::Enter => {
                 self.pending_command = None;
+                self.mode = EditorMode::Normal;
                 None
             }
             Key::Char(c) => {
@@ -416,6 +417,17 @@ mod tests {
                 editor.handle_keypress(Key::Enter);
 
                 assert_eq!(editor.pending_command(), None);
+            }
+
+            #[test]
+            fn enter_returns_to_normal_mode() {
+                let mut editor = Editor::new(Buffer::new(""));
+
+                editor.handle_keypress(Key::Char(':'));
+                editor.handle_keypress(Key::Char('w'));
+                editor.handle_keypress(Key::Enter);
+
+                assert_eq!(editor.mode(), &EditorMode::Normal);
             }
         }
     }
