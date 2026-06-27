@@ -52,6 +52,10 @@ impl Editor {
                 self.mode = EditorMode::Insert;
                 None
             }
+            Key::Char(':') => {
+                self.mode = EditorMode::Command;
+                None
+            }
 
             // Motions
             Key::Char('h') => {
@@ -318,6 +322,14 @@ mod tests {
 
                 editor.handle_keypress(Key::Char('i'));
                 assert_eq!(editor.mode(), &EditorMode::Insert);
+            }
+
+            #[test]
+            fn command() {
+                let mut editor = Editor::new(Buffer::new(""));
+
+                editor.handle_keypress(Key::Char(':'));
+                assert_eq!(editor.mode(), &EditorMode::Command);
             }
         }
     }
