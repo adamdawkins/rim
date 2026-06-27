@@ -103,9 +103,14 @@ impl Editor {
                 None
             }
             Key::Enter => {
+                let action = match self.pending_command.as_deref() {
+                    Some("w") => Some(EditorAction::Write),
+                    _ => None,
+                };
                 self.pending_command = None;
                 self.mode = EditorMode::Normal;
-                None
+
+                action
             }
             Key::Char(c) => {
                 self.pending_command.get_or_insert_with(String::new).push(c);
