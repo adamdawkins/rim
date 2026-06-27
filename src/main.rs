@@ -89,7 +89,7 @@ impl Terminal {
         self.render_buffer(buffer);
         self.render_status_line(mode, buffer, cursor);
         self.render_command_line(mode, buffer, pending_command);
-        self.render_cursor(mode, cursor);
+        self.render_cursor(mode, cursor, pending_command);
     }
 
     fn clear_screen(&self) {
@@ -116,13 +116,18 @@ impl Terminal {
         }
     }
 
-    fn render_cursor(&self, mode: &EditorMode, buffer_cursor: &Cursor) {
+    fn render_cursor(
+        &self,
+        mode: &EditorMode,
+        buffer_cursor: &Cursor,
+        pending_command: Option<&str>,
+    ) {
         let mut row = buffer_cursor.row() as u16;
         let mut col = buffer_cursor.col() as u16;
 
         if mode == &EditorMode::Command {
             row = terminal::size().unwrap().1;
-            col = 1; // hardcode to the first position for now
+            col = pending_command.map_or(0, |cmd| cmd.len() as u16 + 1)
         }
 
         execute!(stdout(), cursor::MoveTo(col as u16, row as u16)).unwrap();
