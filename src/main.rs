@@ -73,7 +73,7 @@ impl Terminal {
         self.render_buffer(buffer);
         self.render_status_line(mode, buffer, cursor);
         self.render_command_line(mode, buffer, cursor);
-        self.move_cursor(cursor);
+        self.move_cursor(mode, cursor);
     }
 
     fn clear_screen(&self) {
@@ -100,7 +100,7 @@ impl Terminal {
         }
     }
 
-    fn move_cursor(&self, cursor: &Cursor) {
+    fn move_cursor(&self, _mode: &EditorMode, cursor: &Cursor) {
         execute!(
             stdout(),
             cursor::MoveTo(cursor.col() as u16, cursor.row() as u16)
