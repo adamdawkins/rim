@@ -351,7 +351,7 @@ mod tests {
     mod command_mode {
         use super::*;
 
-        mod switch_modes {
+        mod switches {
             use super::*;
 
             #[test]
