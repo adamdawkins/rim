@@ -26,7 +26,12 @@ fn main() {
 }
 
 fn run(terminal: Terminal, mut editor: Editor) {
-    terminal.render(editor.buffer(), editor.cursor(), editor.mode());
+    terminal.render(
+        editor.buffer(),
+        editor.cursor(),
+        editor.mode(),
+        editor.pending_command(),
+    );
 
     loop {
         match read().unwrap() {
@@ -44,7 +49,12 @@ fn run(terminal: Terminal, mut editor: Editor) {
             _ => {}
         }
 
-        terminal.render(editor.buffer(), editor.cursor(), editor.mode());
+        terminal.render(
+            editor.buffer(),
+            editor.cursor(),
+            editor.mode(),
+            editor.pending_command(),
+        );
     }
 }
 
@@ -67,7 +77,13 @@ impl Terminal {
         Terminal
     }
 
-    pub fn render(&self, buffer: &Buffer, cursor: &Cursor, mode: &EditorMode) {
+    pub fn render(
+        &self,
+        buffer: &Buffer,
+        cursor: &Cursor,
+        mode: &EditorMode,
+        _pending_command: Option<&str>,
+    ) {
         self.clear_screen();
         self.set_cursor_style(mode);
         self.render_buffer(buffer);
