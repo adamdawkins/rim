@@ -8,6 +8,7 @@ pub struct Editor {
     buffer: Buffer,
     cursor: Cursor,
     mode: EditorMode,
+    pending_command: Option<String>,
 }
 
 impl Editor {
@@ -16,6 +17,7 @@ impl Editor {
             buffer,
             cursor: Cursor::default(),
             mode: EditorMode::Normal,
+            pending_command: None,
         }
     }
 
