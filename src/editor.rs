@@ -39,6 +39,7 @@ impl Editor {
         match self.mode {
             EditorMode::Normal => self.handle_normal_mode_keypress(key),
             EditorMode::Insert => self.handle_insert_mode_keypress(key),
+            _ => None,
         }
     }
 
@@ -195,6 +196,7 @@ impl Editor {
 pub enum EditorMode {
     Normal,
     Insert,
+    Command,
 }
 
 impl fmt::Display for EditorMode {
@@ -202,6 +204,7 @@ impl fmt::Display for EditorMode {
         match self {
             EditorMode::Normal => write!(f, "Normal"),
             EditorMode::Insert => write!(f, "Insert"),
+            EditorMode::Command => write!(f, "Command"),
         }
     }
 }

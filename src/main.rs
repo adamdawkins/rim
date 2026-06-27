@@ -89,6 +89,7 @@ impl Terminal {
         match mode {
             EditorMode::Normal => execute!(stdout(), SetCursorStyle::SteadyBlock).unwrap(),
             EditorMode::Insert => execute!(stdout(), SetCursorStyle::SteadyBar).unwrap(),
+            _ => execute!(stdout(), SetCursorStyle::SteadyBlock).unwrap(),
         }
     }
 
