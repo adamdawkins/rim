@@ -104,6 +104,11 @@ impl Terminal {
         let mut row = buffer_cursor.row() as u16;
         let mut col = buffer_cursor.col() as u16;
 
+        if mode == &EditorMode::Command {
+            row = terminal::size().unwrap().1;
+            col = 1; // hardcode to the first position for now
+        }
+
         execute!(stdout(), cursor::MoveTo(col as u16, row as u16)).unwrap();
     }
 
