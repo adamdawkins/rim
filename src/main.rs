@@ -100,12 +100,11 @@ impl Terminal {
         }
     }
 
-    fn render_cursor(&self, _mode: &EditorMode, buffer_cursor: &Cursor) {
-        execute!(
-            stdout(),
-            cursor::MoveTo(buffer_cursor.col() as u16, buffer_cursor.row() as u16)
-        )
-        .unwrap();
+    fn render_cursor(&self, mode: &EditorMode, buffer_cursor: &Cursor) {
+        let mut row = buffer_cursor.row() as u16;
+        let mut col = buffer_cursor.col() as u16;
+
+        execute!(stdout(), cursor::MoveTo(col as u16, row as u16)).unwrap();
     }
 
     fn render_status_line(&self, mode: &EditorMode, buffer: &Buffer, cursor: &Cursor) {
