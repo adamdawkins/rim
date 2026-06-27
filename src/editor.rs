@@ -245,6 +245,48 @@ mod tests {
     mod normal_mode {
         use super::*;
 
+        mod switches {
+            use super::*;
+
+            #[test]
+            fn insert() {
+                let mut editor = Editor::new(Buffer::new(""));
+
+                editor.handle_keypress(Key::Char('i'));
+                assert_eq!(editor.mode(), &EditorMode::Insert);
+            }
+
+            #[test]
+            fn command() {
+                let mut editor = Editor::new(Buffer::new(""));
+
+                editor.handle_keypress(Key::Char(':'));
+                assert_eq!(editor.mode(), &EditorMode::Command);
+            }
+        }
+
+        mod actions {
+            use super::*;
+
+            #[test]
+            fn quit() {
+                let mut editor = Editor::new(Buffer::new(""));
+
+                let action = editor.handle_keypress(Key::Char('q'));
+
+                assert_eq!(action, Some(EditorAction::Quit));
+            }
+
+            #[test]
+            fn write() {
+                let mut editor = Editor::new(Buffer::new(""));
+
+                let action = editor.handle_keypress(Key::Char('w'));
+
+                assert_eq!(action, Some(EditorAction::Write));
+            }
+        }
+
         mod motions {
             use super::*;
 
@@ -302,48 +344,6 @@ mod tests {
                 editor.handle_keypress(Key::Char('^'));
 
                 assert_eq!(editor.cursor().col(), 4);
-            }
-        }
-
-        mod actions {
-            use super::*;
-
-            #[test]
-            fn quit() {
-                let mut editor = Editor::new(Buffer::new(""));
-
-                let action = editor.handle_keypress(Key::Char('q'));
-
-                assert_eq!(action, Some(EditorAction::Quit));
-            }
-
-            #[test]
-            fn write() {
-                let mut editor = Editor::new(Buffer::new(""));
-
-                let action = editor.handle_keypress(Key::Char('w'));
-
-                assert_eq!(action, Some(EditorAction::Write));
-            }
-        }
-
-        mod switches {
-            use super::*;
-
-            #[test]
-            fn insert() {
-                let mut editor = Editor::new(Buffer::new(""));
-
-                editor.handle_keypress(Key::Char('i'));
-                assert_eq!(editor.mode(), &EditorMode::Insert);
-            }
-
-            #[test]
-            fn command() {
-                let mut editor = Editor::new(Buffer::new(""));
-
-                editor.handle_keypress(Key::Char(':'));
-                assert_eq!(editor.mode(), &EditorMode::Command);
             }
         }
     }
