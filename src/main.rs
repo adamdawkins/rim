@@ -152,7 +152,7 @@ impl Terminal {
             stdout(),
             SetBackgroundColor(Color::Yellow),
             SetForegroundColor(Color::Black),
-            cursor::MoveTo(0, terminal::size().unwrap().1 - 1),
+            cursor::MoveTo(0, terminal::size().unwrap().1 - 2),
             Print(status),
             ResetColor
         )
@@ -176,7 +176,7 @@ impl Terminal {
 
         execute!(
             stdout(),
-            cursor::MoveTo(0, terminal::size().unwrap().1),
+            cursor::MoveTo(0, terminal::size().unwrap().1 - 1),
             Print(line)
         )
         .unwrap();
