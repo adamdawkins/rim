@@ -5,8 +5,8 @@
 - [x] [2026-06-27] > Exit command mode with `Esc`
 - [x] [2026-06-27] > render a `:` on command line when in command mode
 - [x] [2026-06-27] > move cursor to command line when in command mode
-- [ ] > Capture command strings
-- [ ] > Display command strings
+- [x] [2026-06-27] > Capture command strings
+- [x] [2026-06-27] > Display command strings
 - [ ] > Execute command on Enter
 - [ ] > Clear previous command on esc or enter
 - [ ] > Render an error if the command is unknown
