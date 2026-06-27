@@ -134,11 +134,20 @@ impl Terminal {
         .unwrap();
     }
 
-    fn render_command_line(&self, _mode: &EditorMode, _buffer: &Buffer, _cursor: &Cursor) {
+    fn render_command_line(&self, mode: &EditorMode, _buffer: &Buffer, _cursor: &Cursor) {
+        let line = format!(
+            "{}",
+            if mode == &EditorMode::Command {
+                ":"
+            } else {
+                ""
+            },
+        );
+
         execute!(
             stdout(),
             cursor::MoveTo(0, terminal::size().unwrap().1),
-            Print("")
+            Print(line)
         )
         .unwrap();
     }
