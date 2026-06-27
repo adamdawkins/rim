@@ -1,6 +1,10 @@
 # Vim-esque text editor
 
 - [ ] Command mode
+- [x] [2026-06-27] > Enter command mode with `:`
+- [x] [2026-06-27] > Exit command mode with `Esc`
+- [x] [2026-06-27] > render a `:` on command line when in command mode
+- [ ] > move cursor to command line when in command mode
 - [ ] Move Normal `w` to `:w`
 - [ ] Move Normal `q` to `:q`
 - [ ] `:wq`
