@@ -33,6 +33,10 @@ impl Editor {
         &self.mode
     }
 
+    pub fn pending_command(&self) -> Option<&str> {
+        self.pending_command.as_deref()
+    }
+
     pub fn written(&mut self) {
         self.buffer.mark_clean();
     }
