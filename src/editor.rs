@@ -102,6 +102,10 @@ impl Editor {
                 self.mode = EditorMode::Normal;
                 None
             }
+            Key::Char(c) => {
+                self.pending_command.get_or_insert_with(String::new).push(c);
+                None
+            }
             _ => None,
         }
     }
@@ -383,6 +387,19 @@ mod tests {
                 editor.handle_keypress(Key::Esc);
 
                 assert_eq!(editor.mode(), &EditorMode::Normal);
+            }
+        }
+
+        mod commanding {
+            use super::*;
+
+            #[test]
+            fn chars() {
+                let mut editor = Editor::new(Buffer::new(""));
+                editor.handle_keypress(Key::Char(':'));
+                editor.handle_keypress(Key::Char('w'));
+
+                assert_eq!(editor.pending_command(), Some("w"));
             }
         }
     }
