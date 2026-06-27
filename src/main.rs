@@ -163,9 +163,9 @@ impl Terminal {
         let line = format!(
             "{}",
             if mode == &EditorMode::Command {
-                ":"
+                format!(":{}", _pending_command.unwrap_or(""))
             } else {
-                ""
+                String::new()
             },
         );
 
