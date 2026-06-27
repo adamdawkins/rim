@@ -39,7 +39,7 @@ impl Editor {
         match self.mode {
             EditorMode::Normal => self.handle_normal_mode_keypress(key),
             EditorMode::Insert => self.handle_insert_mode_keypress(key),
-            _ => None,
+            EditorMode::Command => self.handle_command_mode_keypress(key),
         }
     }
 
@@ -84,6 +84,16 @@ impl Editor {
             }
             Key::Char('$') => {
                 self.move_cursor_to_end_of_line(self.cursor.row());
+                None
+            }
+            _ => None,
+        }
+    }
+
+    fn handle_command_mode_keypress(&mut self, key: Key) -> Option<EditorAction> {
+        match key {
+            Key::Esc => {
+                self.mode = EditorMode::Normal;
                 None
             }
             _ => None,
@@ -330,6 +340,24 @@ mod tests {
 
                 editor.handle_keypress(Key::Char(':'));
                 assert_eq!(editor.mode(), &EditorMode::Command);
+            }
+        }
+    }
+
+    mod command_mode {
+        use super::*;
+
+        mod switch_modes {
+            use super::*;
+
+            #[test]
+            fn esc() {
+                let mut editor = Editor::new(Buffer::new(""));
+
+                editor.handle_keypress(Key::Char(':'));
+                editor.handle_keypress(Key::Esc);
+
+                assert_eq!(editor.mode(), &EditorMode::Normal);
             }
         }
     }
