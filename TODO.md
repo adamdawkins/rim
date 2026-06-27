@@ -8,7 +8,7 @@
 - [x] [2026-06-27] > Capture command strings
 - [x] [2026-06-27] > Display command strings
 - [ ] > Execute command on Enter
-- [ ] > Clear previous command on esc or enter
+- [x] [2026-06-27] > Clear previous command on esc or enter
 - [ ] > Render an error if the command is unknown
 - [ ] Move Normal `w` to `:w`
 - [ ] Move Normal `q` to `:q`
