@@ -248,6 +248,21 @@ pub enum Key {
 mod tests {
     use super::*;
 
+    mod io {
+        use super::*;
+
+        #[test]
+        fn written() {
+            let mut editor = Editor::new(Buffer::new("Hello"));
+
+            editor.handle_keypress(Key::Char('i'));
+            editor.handle_keypress(Key::Char('h'));
+            assert!(editor.buffer().is_modified());
+
+            editor.written();
+            assert!(!editor.buffer().is_modified());
+        }
+    }
     mod normal_mode {
         use super::*;
 
@@ -374,22 +389,6 @@ mod tests {
 
     mod insert_mode {
         use super::*;
-
-        mod io {
-            use super::*;
-
-            #[test]
-            fn written() {
-                let mut editor = Editor::new(Buffer::new("Hello"));
-
-                editor.handle_keypress(Key::Char('i'));
-                editor.handle_keypress(Key::Char('h'));
-                assert!(editor.buffer().is_modified());
-
-                editor.written();
-                assert!(!editor.buffer().is_modified());
-            }
-        }
 
         mod commands {
             use super::*;
