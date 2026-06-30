@@ -1,12 +1,15 @@
 # Vim-esque text editor
 
+- [ ] Remove `_` from used variables
+- [ ] Clear message on switching modes
+
 - [ ] Accept file name to `:w`
 - [ ] Append mode (`a`)
 - [ ] BUG: Empty buffer can't be written to
 - [ ] Delete line?
 - [ ] Other motion commands?
 - [ ] Render an error if the command is unknown
-- [ ] Render success message on write
+- [x] [2026-06-30] Render success message on write
 - [ ] Visual mode
 - [ ] Write a brand new file
 - [ ] `:e`
