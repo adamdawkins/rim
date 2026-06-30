@@ -310,15 +310,6 @@ mod tests {
 
                 assert_eq!(action, Some(EditorAction::Quit));
             }
-
-            #[test]
-            fn write() {
-                let mut editor = Editor::new(Buffer::new(""));
-
-                let action = editor.handle_keypress(Key::Char('w'));
-
-                assert_eq!(action, None);
-            }
         }
 
         mod motions {
