@@ -93,15 +93,15 @@ impl Terminal {
         pending_command: Option<&str>,
         message: Option<&Message>,
     ) {
-        self.clear_screen();
-        self.set_cursor_style(mode);
-        self.render_buffer(buffer);
-        self.render_status_line(mode, buffer, cursor);
-        self.render_command_line(mode, pending_command, message);
-        self.render_cursor(mode, cursor, pending_command);
+        Self::clear_screen();
+        Self::set_cursor_style(mode);
+        Self::render_buffer(buffer);
+        Self::render_status_line(mode, buffer, cursor);
+        Self::render_command_line(mode, pending_command, message);
+        Self::render_cursor(mode, cursor, pending_command);
     }
 
-    fn clear_screen(&self) {
+    fn clear_screen() {
         execute!(
             stdout(),
             terminal::Clear(terminal::ClearType::All),
@@ -110,7 +110,7 @@ impl Terminal {
         .unwrap();
     }
 
-    fn set_cursor_style(&self, mode: &EditorMode) {
+    fn set_cursor_style(mode: &EditorMode) {
         match mode {
             EditorMode::Normal => execute!(stdout(), SetCursorStyle::SteadyBlock).unwrap(),
             EditorMode::Insert => execute!(stdout(), SetCursorStyle::SteadyBar).unwrap(),
@@ -119,18 +119,13 @@ impl Terminal {
     }
 
     // rendering
-    fn render_buffer(&self, buffer: &Buffer) {
+    fn render_buffer(buffer: &Buffer) {
         for line in buffer.lines() {
             execute!(stdout(), Print(format!("{}\r\n", line))).unwrap();
         }
     }
 
-    fn render_cursor(
-        &self,
-        mode: &EditorMode,
-        buffer_cursor: &Cursor,
-        pending_command: Option<&str>,
-    ) {
+    fn render_cursor(mode: &EditorMode, buffer_cursor: &Cursor, pending_command: Option<&str>) {
         let mut row = buffer_cursor.row() as u16;
         let mut col = buffer_cursor.col() as u16;
 
@@ -142,7 +137,7 @@ impl Terminal {
         execute!(stdout(), cursor::MoveTo(col as u16, row as u16)).unwrap();
     }
 
-    fn render_status_line(&self, mode: &EditorMode, buffer: &Buffer, cursor: &Cursor) {
+    fn render_status_line(mode: &EditorMode, buffer: &Buffer, cursor: &Cursor) {
         let path = format!(
             "{}{}",
             buffer.path().unwrap_or("[No Name]"),
@@ -169,7 +164,6 @@ impl Terminal {
     }
 
     fn render_command_line(
-        &self,
         mode: &EditorMode,
         pending_command: Option<&str>,
         message: Option<&Message>,
@@ -203,7 +197,7 @@ impl Terminal {
 
 impl Drop for Terminal {
     fn drop(&mut self) {
-        self.clear_screen();
+        Terminal::clear_screen();
         terminal::disable_raw_mode().unwrap();
     }
 }
