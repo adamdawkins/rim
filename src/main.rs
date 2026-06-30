@@ -97,7 +97,7 @@ impl Terminal {
         self.set_cursor_style(mode);
         self.render_buffer(buffer);
         self.render_status_line(mode, buffer, cursor);
-        self.render_command_line(mode, buffer, pending_command, message);
+        self.render_command_line(mode, pending_command, message);
         self.render_cursor(mode, cursor, pending_command);
     }
 
@@ -171,7 +171,6 @@ impl Terminal {
     fn render_command_line(
         &self,
         mode: &EditorMode,
-        _buffer: &Buffer,
         pending_command: Option<&str>,
         message: Option<&Message>,
     ) {
