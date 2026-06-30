@@ -99,6 +99,7 @@ impl Editor {
         match key {
             Key::Esc => {
                 self.mode = EditorMode::Normal;
+                self.pending_command = None;
                 None
             }
             Key::Enter => {
@@ -387,6 +388,17 @@ mod tests {
                 editor.handle_keypress(Key::Esc);
 
                 assert_eq!(editor.mode(), &EditorMode::Normal);
+            }
+
+            #[test]
+            fn esc_clears_pending_command() {
+                let mut editor = Editor::new(Buffer::new(""));
+
+                editor.handle_keypress(Key::Char(':'));
+                editor.handle_keypress(Key::Char('w'));
+                editor.handle_keypress(Key::Esc);
+
+                assert_eq!(editor.pending_command(), None);
             }
         }
 
