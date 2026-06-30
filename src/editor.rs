@@ -58,7 +58,7 @@ impl Editor {
 
     fn handle_normal_mode_keypress(&mut self, key: Key) -> Option<EditorAction> {
         match key {
-            // Commands
+            // Switches
             Key::Char('i') => {
                 self.message = None;
                 self.mode = EditorMode::Insert;
