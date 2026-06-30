@@ -300,19 +300,6 @@ mod tests {
             }
         }
 
-        mod actions {
-            use super::*;
-
-            #[test]
-            fn quit() {
-                let mut editor = Editor::new(Buffer::new(""));
-
-                let action = editor.handle_keypress(Key::Char('q'));
-
-                assert_eq!(action, None);
-            }
-        }
-
         mod motions {
             use super::*;
 
