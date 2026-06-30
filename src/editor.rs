@@ -39,6 +39,10 @@ impl Editor {
         self.pending_command.as_deref()
     }
 
+    pub fn message(&self) -> Option<&Message> {
+        self.message.as_ref()
+    }
+
     pub fn written(&mut self) {
         self.buffer.mark_clean();
         self.message = Some(Message::Info("written".to_string()));
