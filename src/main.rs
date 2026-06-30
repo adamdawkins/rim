@@ -44,7 +44,13 @@ fn run(terminal: Terminal, mut editor: Editor) {
                         editor.written();
                     }
                 }
-                _ => {}
+                Some(EditorAction::WriteAndQuit) => {
+                    if fs::write("foo.txt", editor.buffer().to_string()).is_ok() {
+                        editor.written();
+                    }
+                    break;
+                }
+                None => {}
             },
             _ => {}
         }
