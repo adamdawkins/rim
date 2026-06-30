@@ -127,7 +127,7 @@ impl Terminal {
 
         if mode == &EditorMode::Command {
             row = terminal::size().unwrap().1;
-            col = pending_command.map_or(0, |cmd| cmd.len() as u16 + 1)
+            col = pending_command.map_or(1, |cmd| cmd.len() as u16 + 1)
         }
 
         execute!(stdout(), cursor::MoveTo(col as u16, row as u16)).unwrap();
