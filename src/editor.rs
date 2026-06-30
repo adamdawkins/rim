@@ -52,7 +52,6 @@ impl Editor {
     fn handle_normal_mode_keypress(&mut self, key: Key) -> Option<EditorAction> {
         match key {
             // Commands
-            Key::Char('q') => Some(EditorAction::Quit),
             Key::Char('i') => {
                 self.mode = EditorMode::Insert;
                 None
@@ -310,7 +309,7 @@ mod tests {
 
                 let action = editor.handle_keypress(Key::Char('q'));
 
-                assert_eq!(action, Some(EditorAction::Quit));
+                assert_eq!(action, None);
             }
         }
 
