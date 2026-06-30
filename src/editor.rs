@@ -437,6 +437,22 @@ mod tests {
                 assert_eq!(editor.mode(), &EditorMode::Normal);
             }
         }
+
+        mod executing {
+            use super::*;
+
+            #[test]
+            fn write() {
+                let mut editor = Editor::new(Buffer::new(""));
+
+                editor.handle_keypress(Key::Char(':'));
+                editor.handle_keypress(Key::Char('w'));
+
+                let action = editor.handle_keypress(Key::Enter);
+
+                assert_eq!(action, Some(EditorAction::Write));
+            }
+        }
     }
 
     mod insert_mode {
