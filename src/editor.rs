@@ -41,6 +41,7 @@ impl Editor {
 
     pub fn written(&mut self) {
         self.buffer.mark_clean();
+        self.message = Some(Message::Info("written".to_string()));
     }
 
     pub fn handle_keypress(&mut self, key: Key) -> Option<EditorAction> {
@@ -285,6 +286,8 @@ mod tests {
 
             editor.written();
             assert!(!editor.buffer().is_modified());
+
+            assert_eq!(editor.message, Some(Message::Info("written".to_string())));
         }
     }
 
