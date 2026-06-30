@@ -15,7 +15,8 @@
 - [x] [2026-06-27] Clear previous command on esc or enter
 - [ ] Render an error if the command is unknown
 - [x] [2026-06-30] Move Normal `w` to `:w`
-- [ ] Cursor should appear after `:` in command mode
+- [x] [2026-06-30] Cursor should appear after `:` in command mode
+- [ ] Clear pending command on `Esc`
 - [ ] `:wq`
 - [ ] `:e`
 - [ ] Accept file name to `:w`
