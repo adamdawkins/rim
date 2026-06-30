@@ -65,6 +65,7 @@ impl Editor {
                 None
             }
             Key::Char(':') => {
+                self.message = None;
                 self.mode = EditorMode::Command;
                 None
             }
@@ -316,9 +317,11 @@ mod tests {
             #[test]
             fn command() {
                 let mut editor = Editor::new(Buffer::new(""));
+                editor.written();
 
                 editor.handle_keypress(Key::Char(':'));
                 assert_eq!(editor.mode(), &EditorMode::Command);
+                assert_eq!(editor.message(), None);
             }
         }
 
