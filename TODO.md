@@ -1,7 +1,7 @@
 # Vim-esque text editor
 
 - [ ] Move Normal `q` to `:q`
-- [ ] -> Add `:q`
+- [x] [2026-06-30] -> Add `:q`
 - [ ] -> Remove `q` from normal mode
 
 - [ ] Accept file name to `:w`

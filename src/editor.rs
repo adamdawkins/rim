@@ -105,6 +105,7 @@ impl Editor {
             Key::Enter => {
                 let action = match self.pending_command.as_deref() {
                     Some("w") => Some(EditorAction::Write),
+                    Some("q") => Some(EditorAction::Quit),
                     _ => None,
                 };
                 self.pending_command = None;
@@ -451,6 +452,18 @@ mod tests {
                 let action = editor.handle_keypress(Key::Enter);
 
                 assert_eq!(action, Some(EditorAction::Write));
+            }
+
+            #[test]
+            fn quit() {
+                let mut editor = Editor::new(Buffer::new(""));
+
+                editor.handle_keypress(Key::Char(':'));
+                editor.handle_keypress(Key::Char('q'));
+
+                let action = editor.handle_keypress(Key::Enter);
+
+                assert_eq!(action, Some(EditorAction::Quit));
             }
         }
     }
