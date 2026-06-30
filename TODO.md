@@ -6,12 +6,11 @@
 - [ ] Delete line?
 - [ ] Other motion commands?
 - [ ] Render an error if the command is unknown
+- [ ] Render success message on write
 - [ ] Visual mode
 - [ ] Write a brand new file
 - [ ] `:e`
-- [ ] `:wq`
 - [ ] open with file from command line (`rim file.txt`)
-- [x] [2026-06-30] Command mode
 - [x] [2026-06-25] Add boundary to `h`
 - [x] [2026-06-25] Add boundary to `j`
 - [x] [2026-06-25] Add boundary to `k`
@@ -45,7 +44,9 @@
 - [x] [2026-06-30] -> Add `:q`
 - [x] [2026-06-30] -> Remove `q` from normal mode
 - [x] [2026-06-30] Clear pending command on `Esc`
+- [x] [2026-06-30] Command mode
 - [x] [2026-06-30] Cursor should appear after `:` in command mode
 - [x] [2026-06-30] Execute command on Enter
 - [x] [2026-06-30] Move Normal `q` to `:q`
 - [x] [2026-06-30] Move Normal `w` to `:w`
+- [x] [2026-06-30] `:wq`
