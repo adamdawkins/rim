@@ -22,10 +22,10 @@ fn main() {
     let terminal = Terminal::new();
     let editor = Editor::new(buffer);
 
-    run(terminal, editor);
+    run(editor);
 }
 
-fn run(terminal: Terminal, mut editor: Editor) {
+fn run(mut editor: Editor) {
     Terminal::render(
         editor.buffer(),
         editor.cursor(),
