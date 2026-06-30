@@ -172,13 +172,13 @@ impl Terminal {
         &self,
         mode: &EditorMode,
         _buffer: &Buffer,
-        _pending_command: Option<&str>,
+        pending_command: Option<&str>,
         message: Option<&Message>,
     ) {
         let line = format!(
             "{}",
             if mode == &EditorMode::Command {
-                format!(":{}", _pending_command.unwrap_or(""))
+                format!(":{}", pending_command.unwrap_or(""))
             } else {
                 match message {
                     Some(Message::Info(msg)) => format!("{}", msg),
