@@ -1,13 +1,8 @@
 # Vim-esque text editor
 
-- [ ] Move Normal `q` to `:q`
-- [x] [2026-06-30] -> Add `:q`
-- [ ] -> Remove `q` from normal mode
-
 - [ ] Accept file name to `:w`
 - [ ] Append mode (`a`)
 - [ ] BUG: Empty buffer can't be written to
-- [x] [2026-06-30] Clear pending command on `Esc`
 - [ ] Delete line?
 - [ ] Other motion commands?
 - [ ] Render an error if the command is unknown
@@ -16,7 +11,7 @@
 - [ ] `:e`
 - [ ] `:wq`
 - [ ] open with file from command line (`rim file.txt`)
-- [/] Command mode
+- [x] [2026-06-30] Command mode
 - [x] [2026-06-25] Add boundary to `h`
 - [x] [2026-06-25] Add boundary to `j`
 - [x] [2026-06-25] Add boundary to `k`
@@ -47,6 +42,10 @@
 - [x] [2026-06-27] Status Line: Modified indicator
 - [x] [2026-06-27] move cursor to command line when in command mode
 - [x] [2026-06-27] render a `:` on command line when in command mode
+- [x] [2026-06-30] -> Add `:q`
+- [x] [2026-06-30] -> Remove `q` from normal mode
+- [x] [2026-06-30] Clear pending command on `Esc`
 - [x] [2026-06-30] Cursor should appear after `:` in command mode
 - [x] [2026-06-30] Execute command on Enter
+- [x] [2026-06-30] Move Normal `q` to `:q`
 - [x] [2026-06-30] Move Normal `w` to `:w`
