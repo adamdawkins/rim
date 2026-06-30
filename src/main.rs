@@ -26,7 +26,7 @@ fn main() {
 }
 
 fn run(terminal: Terminal, mut editor: Editor) {
-    terminal.render(
+    Terminal::render(
         editor.buffer(),
         editor.cursor(),
         editor.mode(),
@@ -56,7 +56,7 @@ fn run(terminal: Terminal, mut editor: Editor) {
             _ => {}
         }
 
-        terminal.render(
+        Terminal::render(
             editor.buffer(),
             editor.cursor(),
             editor.mode(),
@@ -86,7 +86,6 @@ impl Terminal {
     }
 
     pub fn render(
-        &self,
         buffer: &Buffer,
         cursor: &Cursor,
         mode: &EditorMode,
