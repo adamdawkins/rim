@@ -187,10 +187,15 @@ impl Terminal {
             },
         );
 
+        if matches!(message, Some(Message::Error(_))) {
+            execute!(stdout(), SetForegroundColor(Color::Red)).unwrap();
+        }
+
         execute!(
             stdout(),
             cursor::MoveTo(0, terminal::size().unwrap().1 - 1),
-            Print(line)
+            Print(line),
+            ResetColor
         )
         .unwrap();
     }
