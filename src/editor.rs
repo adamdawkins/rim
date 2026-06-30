@@ -380,7 +380,7 @@ mod tests {
             use super::*;
 
             #[test]
-            fn esc() {
+            fn esc_switches_to_normal() {
                 let mut editor = Editor::new(Buffer::new(""));
 
                 editor.handle_keypress(Key::Char(':'));
