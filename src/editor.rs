@@ -60,6 +60,7 @@ impl Editor {
         match key {
             // Commands
             Key::Char('i') => {
+                self.message = None;
                 self.mode = EditorMode::Insert;
                 None
             }
@@ -304,9 +305,12 @@ mod tests {
             #[test]
             fn insert() {
                 let mut editor = Editor::new(Buffer::new(""));
+                editor.written();
 
                 editor.handle_keypress(Key::Char('i'));
+
                 assert_eq!(editor.mode(), &EditorMode::Insert);
+                assert_eq!(editor.message(), None);
             }
 
             #[test]
