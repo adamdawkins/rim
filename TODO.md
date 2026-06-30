@@ -4,29 +4,19 @@
 - [ ] -> Add `:q`
 - [ ] -> Remove `q` from normal mode
 
-- [ ] Command mode
-- [x] [2026-06-27] Enter command mode with `:`
-- [x] [2026-06-27] Exit command mode with `Esc`
-- [x] [2026-06-27] render a `:` on command line when in command mode
-- [x] [2026-06-27] move cursor to command line when in command mode
-- [x] [2026-06-27] Capture command strings
-- [x] [2026-06-27] Display command strings
-- [x] [2026-06-30] Execute command on Enter
-- [x] [2026-06-27] Clear previous command on esc or enter
-- [ ] Render an error if the command is unknown
-- [x] [2026-06-30] Move Normal `w` to `:w`
-- [x] [2026-06-30] Cursor should appear after `:` in command mode
-- [ ] Clear pending command on `Esc`
-- [ ] `:wq`
-- [ ] `:e`
 - [ ] Accept file name to `:w`
 - [ ] Append mode (`a`)
 - [ ] BUG: Empty buffer can't be written to
+- [x] [2026-06-30] Clear pending command on `Esc`
 - [ ] Delete line?
 - [ ] Other motion commands?
+- [ ] Render an error if the command is unknown
 - [ ] Visual mode
 - [ ] Write a brand new file
+- [ ] `:e`
+- [ ] `:wq`
 - [ ] open with file from command line (`rim file.txt`)
+- [/] Command mode
 - [x] [2026-06-25] Add boundary to `h`
 - [x] [2026-06-25] Add boundary to `j`
 - [x] [2026-06-25] Add boundary to `k`
@@ -49,4 +39,14 @@
 - [x] [2026-06-26] `0` jump to end of line
 - [x] [2026-06-26] `^` jump to first character of line
 - [x] [2026-06-26] `w`
+- [x] [2026-06-27] Capture command strings
+- [x] [2026-06-27] Clear previous command on esc or enter
+- [x] [2026-06-27] Display command strings
+- [x] [2026-06-27] Enter command mode with `:`
+- [x] [2026-06-27] Exit command mode with `Esc`
 - [x] [2026-06-27] Status Line: Modified indicator
+- [x] [2026-06-27] move cursor to command line when in command mode
+- [x] [2026-06-27] render a `:` on command line when in command mode
+- [x] [2026-06-30] Cursor should appear after `:` in command mode
+- [x] [2026-06-30] Execute command on Enter
+- [x] [2026-06-30] Move Normal `w` to `:w`
