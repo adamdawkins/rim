@@ -8,6 +8,7 @@ pub struct Editor {
     buffer: Buffer,
     cursor: Cursor,
     mode: EditorMode,
+    message: Option<Message>,
     pending_command: Option<String>,
 }
 
@@ -18,6 +19,7 @@ impl Editor {
             cursor: Cursor::default(),
             mode: EditorMode::Normal,
             pending_command: None,
+            message: None,
         }
     }
 
@@ -249,6 +251,12 @@ pub enum EditorAction {
     Quit,
     Write,
     WriteAndQuit,
+}
+
+#[derive(Debug, PartialEq)]
+pub enum Message {
+    Info(String),
+    Error(String),
 }
 
 pub enum Key {
