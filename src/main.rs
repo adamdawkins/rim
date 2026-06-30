@@ -11,7 +11,7 @@ use crossterm::{
 };
 
 use rim::{
-    editor::{EditorAction, EditorMode, Key},
+    editor::{EditorAction, EditorMode, Key, Message},
     Buffer, Cursor, Editor,
 };
 
@@ -31,6 +31,7 @@ fn run(terminal: Terminal, mut editor: Editor) {
         editor.cursor(),
         editor.mode(),
         editor.pending_command(),
+        editor.message(),
     );
 
     loop {
@@ -60,6 +61,7 @@ fn run(terminal: Terminal, mut editor: Editor) {
             editor.cursor(),
             editor.mode(),
             editor.pending_command(),
+            editor.message(),
         );
     }
 }
@@ -89,12 +91,13 @@ impl Terminal {
         cursor: &Cursor,
         mode: &EditorMode,
         pending_command: Option<&str>,
+        message: Option<&Message>,
     ) {
         self.clear_screen();
         self.set_cursor_style(mode);
         self.render_buffer(buffer);
         self.render_status_line(mode, buffer, cursor);
-        self.render_command_line(mode, buffer, pending_command);
+        self.render_command_line(mode, buffer, pending_command, message);
         self.render_cursor(mode, cursor, pending_command);
     }
 
@@ -170,13 +173,18 @@ impl Terminal {
         mode: &EditorMode,
         _buffer: &Buffer,
         _pending_command: Option<&str>,
+        message: Option<&Message>,
     ) {
         let line = format!(
             "{}",
             if mode == &EditorMode::Command {
                 format!(":{}", _pending_command.unwrap_or(""))
             } else {
-                String::new()
+                match message {
+                    Some(Message::Info(msg)) => format!("{}", msg),
+                    Some(Message::Error(msg)) => format!("Err: {}", msg),
+                    None => String::new(),
+                }
             },
         );
 
