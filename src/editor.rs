@@ -277,6 +277,7 @@ mod tests {
             assert!(!editor.buffer().is_modified());
         }
     }
+
     mod normal_mode {
         use super::*;
 
