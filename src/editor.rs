@@ -103,8 +103,9 @@ impl Editor {
             }
             Key::Enter => {
                 let action = match self.pending_command.as_deref() {
-                    Some("w") => Some(EditorAction::Write),
                     Some("q") => Some(EditorAction::Quit),
+                    Some("w") => Some(EditorAction::Write),
+                    Some("wq") => Some(EditorAction::WriteAndQuit),
                     _ => None,
                 };
                 self.pending_command = None;
@@ -247,6 +248,7 @@ impl fmt::Display for EditorMode {
 pub enum EditorAction {
     Quit,
     Write,
+    WriteAndQuit,
 }
 
 pub enum Key {
@@ -451,6 +453,19 @@ mod tests {
                 let action = editor.handle_keypress(Key::Enter);
 
                 assert_eq!(action, Some(EditorAction::Quit));
+            }
+
+            #[test]
+            fn write_and_quit() {
+                let mut editor = Editor::new(Buffer::new(""));
+
+                editor.handle_keypress(Key::Char(':'));
+                editor.handle_keypress(Key::Char('w'));
+                editor.handle_keypress(Key::Char('q'));
+
+                let action = editor.handle_keypress(Key::Enter);
+
+                assert_eq!(action, Some(EditorAction::WriteAndQuit));
             }
         }
     }
