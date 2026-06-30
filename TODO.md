@@ -1,7 +1,6 @@
 # Vim-esque text editor
 
-- [ ] Render an error if the command is unknown
-
+- [x] [2026-06-30] Write error messages in red
 - [ ] Accept file name to `:w`
 - [ ] Append mode (`a`)
 - [ ] BUG: Empty buffer can't be written to
@@ -51,5 +50,6 @@
 - [x] [2026-06-30] Move Normal `q` to `:q`
 - [x] [2026-06-30] Move Normal `w` to `:w`
 - [x] [2026-06-30] Remove `_` from used variables
+- [x] [2026-06-30] Render an error if the command is unknown
 - [x] [2026-06-30] Render success message on write
 - [x] [2026-06-30] `:wq`
