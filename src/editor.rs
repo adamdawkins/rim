@@ -115,7 +115,12 @@ impl Editor {
                     Some("q") => Some(EditorAction::Quit),
                     Some("w") => Some(EditorAction::Write),
                     Some("wq") => Some(EditorAction::WriteAndQuit),
-                    _ => None,
+                    Some(cmd) => {
+                        self.message =
+                            Some(Message::Error(format!("not an editor command: {}", cmd)));
+                        None
+                    }
+                    None => None,
                 };
                 self.pending_command = None;
                 self.mode = EditorMode::Normal;
@@ -488,6 +493,23 @@ mod tests {
                 let action = editor.handle_keypress(Key::Enter);
 
                 assert_eq!(action, Some(EditorAction::WriteAndQuit));
+            }
+
+            #[test]
+            fn unknown_command() {
+                let mut editor = Editor::new(Buffer::new(""));
+
+                editor.handle_keypress(Key::Char(':'));
+                editor.handle_keypress(Key::Char('q'));
+                editor.handle_keypress(Key::Char('w'));
+
+                let action = editor.handle_keypress(Key::Enter);
+
+                assert_eq!(action, None);
+                assert_eq!(
+                    editor.message,
+                    Some(Message::Error("not an editor command: qw".to_string()))
+                );
             }
         }
     }
